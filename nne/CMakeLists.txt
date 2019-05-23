@@ -1,15 +1,15 @@
+set(MIN_CMAKE_VERSION 3.10)
 cmake_minimum_required(VERSION ${MIN_CMAKE_VERSION})
 
-project(TestQtQuick LANGUAGES CXX)
+project(nne LANGUAGES CXX)
 
 # ------------------------------------------------------------------------------
 # Setup.
 # ------------------------------------------------------------------------------
-set(PUBLIC_HEADER_DIR   "include")
+set(HEADER_DIR          "include")
 set(SRC_DIR             "src")
 
-set(PUBLIC_HEADERS      )
-
+#set(HEADER_FILES        ${HEADER_DIR}/)
 set(SRC_FILES           ${SRC_DIR}/main.cpp)
 
 # ------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 # ------------------------------------------------------------------------------
 # Create target.
 # ------------------------------------------------------------------------------
-add_executable(${PROJECT_NAME} "main.cpp" "qml.qrc")
+add_executable(${PROJECT_NAME} ${SRC_FILES} "qml.qrc")
 target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Core Qt5::Quick)
 
