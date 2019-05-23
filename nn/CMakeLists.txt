@@ -9,7 +9,6 @@ set(TARGET nn)
 cmake_minimum_required(VERSION ${MIN_CMAKE_VERSION})
 project(${TARGET} VERSION 0.0.1)
 
-
 set(PUBLIC_HEADER_DIR   "include")
 set(SRC_DIR             "src")
 
