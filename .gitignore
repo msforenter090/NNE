@@ -18,6 +18,5 @@ _deps
 ### CMake Patch ###
 # External projects
 
-*/bin/
-!*/bin/dummy
+bin
 # # End of https://www.gitignore.io/api/cmake
