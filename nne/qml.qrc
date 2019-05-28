@@ -1,7 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>screen/main.qml</file>
         <file>image/logo.png</file>
-        <file>screen/splash.qml</file>
+        <file>screen/window/Splash.qml</file>
+        <file>screen/window/Main.qml</file>
+        <file>screen/window/Compositor.qml</file>
+        <file>script/screen.js</file>
     </qresource>
 </RCC>
