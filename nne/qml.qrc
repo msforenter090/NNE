@@ -5,5 +5,9 @@
         <file>screen/window/Main.qml</file>
         <file>screen/window/Compositor.qml</file>
         <file>script/screen.js</file>
+        <file>screen/component/NneMenu.qml</file>
+        <file>screen/component/Work.qml</file>
+        <file>screen/component/Device.qml</file>
+        <file>screen/component/Activity.qml</file>
     </qresource>
 </RCC>
