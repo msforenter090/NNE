@@ -10,8 +10,8 @@ project(${TARGET} LANGUAGES CXX)
 set(SRC_DIR             "src")
 set(UI_DIR              "ui")
 
-set(HEADER_FILES        ${HEADER_DIR}/mainwindow.h)
-set(SRC_FILES           ${SRC_DIR}/mainwindow.cpp ${SRC_DIR}/main.cpp)
+set(HEADER_FILES        ${HEADER_DIR}/gui/mainwindow.h)
+set(SRC_FILES           ${SRC_DIR}/gui/mainwindow.cpp ${SRC_DIR}/main.cpp)
 set(UI_FILES            ${UI_DIR}/mainwindow.ui)
 
 set(FILES ${SRC_FILES})
