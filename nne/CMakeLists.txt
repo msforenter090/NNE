@@ -11,7 +11,11 @@ set(SRC_DIR             "src")
 set(UI_DIR              "ui")
 
 set(HEADER_FILES        ${HEADER_DIR}/gui/mainwindow.h)
-set(SRC_FILES           ${SRC_DIR}/gui/mainwindow.cpp ${SRC_DIR}/main.cpp)
+set(SRC_FILES           ${SRC_DIR}/gui/mainwindow.cpp
+                        ${SRC_DIR}/history.h ${SRC_DIR}/history.cpp
+                        ${SRC_DIR}/ostream.h ${SRC_DIR}/ostream.cpp
+                        ${SRC_DIR}/project.h ${SRC_DIR}/project.cpp
+                        ${SRC_DIR}/main.cpp)
 set(UI_FILES            ${UI_DIR}/mainwindow.ui)
 
 set(FILES ${SRC_FILES})
