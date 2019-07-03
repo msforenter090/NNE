@@ -9,9 +9,6 @@ namespace nne
     class HistoryParam
     {
         Q_DISABLE_COPY(HistoryParam)
-
-    private:
-
     };
 
     /**
@@ -28,7 +25,7 @@ namespace nne
         const QList<HistoryParam*>      _params;
 
     public:
-        HistoryElement(const QDateTime& date, const unsigned int code,
+        explicit HistoryElement(const QDateTime& date, const unsigned int code,
                        const QString &description,
                        const QList<HistoryParam*> &params);
 
@@ -50,7 +47,7 @@ namespace nne
 
 
     public:
-        History(const QList<HistoryElement*> &history);
+        explicit History(const QList<HistoryElement*> &history);
 
         const QList<HistoryElement*>& history() const;
     };

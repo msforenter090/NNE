@@ -15,7 +15,7 @@ namespace nne
         QList<QFile*>       _training;
 
     public:
-        Project(const QList<QFile*>& networks,
+        explicit Project(const QList<QFile*>& networks,
                 const QList<QFile*>& trainingSets,
                 const QList<QFile*>& training);
 
