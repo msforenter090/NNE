@@ -1,4 +1,4 @@
-set(MIN_CMAKE_VERSION 3.10)
+#set(MIN_CMAKE_VERSION 3.10)
 set(TARGET nne)
 
 cmake_minimum_required(VERSION ${MIN_CMAKE_VERSION})
@@ -19,6 +19,7 @@ set(SRC_FILES           ${SRC_DIR}/gui/mainwindow.cpp
 set(UI_FILES            ${UI_DIR}/mainwindow.ui)
 
 set(FILES ${SRC_FILES})
+set(CMAKE_SKIP_RPATH, TRUE)
 
 # ------------------------------------------------------------------------------
 # Set flags & options.
@@ -38,14 +39,25 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(${SRC_DIR})
+
 # ------------------------------------------------------------------------------
 # Dependencies.
 # ------------------------------------------------------------------------------
+find_package(nn)
 find_package(Qt5Widgets CONFIG REQUIRED)
+
+include_directories(${NN_INCLUDE_DIR})
+link_directories(${NN_LIBRARY})
 
 # ------------------------------------------------------------------------------
 # Create target.
 # ------------------------------------------------------------------------------
-# Tell CMake to create the helloworld executable
 add_executable(${TARGET} WIN32 ${SRC_FILES} ${UI_FILES})
 target_link_libraries(${TARGET} Qt5::Widgets)
+target_link_libraries(${TARGET} -lnn)
+
+# ------------------------------------------------------------------------------
+# Install.
+# ------------------------------------------------------------------------------
+install(TARGETS ${TARGET} DESTINATION ${CMAKE_INSTALL_PREFIX})
+

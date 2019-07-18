@@ -11,6 +11,7 @@ set(MIN_CMAKE_VERSION 3.10)
 # Setup.
 # ------------------------------------------------------------------------------
 cmake_minimum_required(VERSION ${MIN_CMAKE_VERSION})
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 # ------------------------------------------------------------------------------
 # Set flags, compiler options.
@@ -21,4 +22,6 @@ cmake_minimum_required(VERSION ${MIN_CMAKE_VERSION})
 # ------------------------------------------------------------------------------
 add_subdirectory(nn)
 add_subdirectory(nne)
+
+add_subdirectory(test_nn)
 

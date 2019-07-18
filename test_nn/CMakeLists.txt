@@ -1,8 +1,7 @@
 # ------------------------------------------------------------------------------
 # Constants.
 # ------------------------------------------------------------------------------
-set(TARGET nn)
-#set(MIN_CMAKE_VERSION 3.10)
+set(TARGET test_nn)
 
 # ------------------------------------------------------------------------------
 # Setup.
@@ -13,41 +12,44 @@ project(${TARGET} VERSION 0.0.1)
 set(PUBLIC_HEADER_DIR   "include")
 set(SRC_DIR             "src")
 
-set(PUBLIC_HEADERS      ${PUBLIC_HEADER_DIR}/nn_context.h
-                        ${PUBLIC_HEADER_DIR}/nn_defs.h
-                        ${PUBLIC_HEADER_DIR}/nn_error.h
-                        ${PUBLIC_HEADER_DIR}/nn_matrix.h
-                        ${PUBLIC_HEADER_DIR}/nn_platform.h
-                        ${PUBLIC_HEADER_DIR}/nn_types.h
-                        )
+set(PUBLIC_HEADERS      ${PUBLIC_HEADER_DIR}/test_nn_context.h
+                        ${PUBLIC_HEADER_DIR}/test_nn_include.h
+                        ${PUBLIC_HEADER_DIR}/test_nn_list.h )
 
-set(SRC_FILES           ${SRC_DIR}/nn_context.c
-                        ${SRC_DIR}/nn_error.c
-                        ${SRC_DIR}/nn_list.c
-                        ${SRC_DIR}/nn_matrix.c
-                        ${SRC_DIR}/nn_platform.c
-                        )
+set(SRC_FILES           ${SRC_DIR}/main.c
+                        ${SRC_DIR}/test_nn_context.c
+                        ${SRC_DIR}/test_nn_list.c )
 
 set(CMAKE_SKIP_RPATH, TRUE)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_C_VISIBILITY_PRESET hidden)
 
 # ------------------------------------------------------------------------------
-# Create the library and target.
+# Dependencies.
 # ------------------------------------------------------------------------------
-add_library(${TARGET} SHARED ${SRC_FILES})
+find_package(nn)
+
+# ------------------------------------------------------------------------------
+# Create target.
+# ------------------------------------------------------------------------------
+add_executable(${TARGET} ${SRC_FILES})
+target_include_directories(${TARGET} PUBLIC ${NN_INCLUDE_DIR})
+target_link_directories(${TARGET} PUBLIC ${NN_LIBRARY})
+target_link_libraries(${TARGET} -lnn -lcmocka)
 
 # ------------------------------------------------------------------------------
 # Set target properties.
 # ------------------------------------------------------------------------------
 target_include_directories  (${TARGET} PRIVATE include)
 set_target_properties       (${TARGET} PROPERTIES VERSION ${PROJECT_VERSION})
-#set_target_properties       (${TARGET} PROPERTIES PUBLIC_HEADER ${PUBLIC_HEADERS})
 set_target_properties       (${TARGET} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 # ------------------------------------------------------------------------------
+# Compile options.
+# ------------------------------------------------------------------------------
+set(CMAKE_BUILD_TYPE Debug)
+target_compile_options(     ${TARGET} PRIVATE -Wall -Wextra -pedantic)
+
+#-------------------------------------------------------------------------------
 # Install.
 # ------------------------------------------------------------------------------
 install(TARGETS ${TARGET} DESTINATION ${CMAKE_INSTALL_PREFIX})
-install(FILES ${PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/nn)
 

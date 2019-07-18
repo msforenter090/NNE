@@ -1,6 +1,8 @@
 #ifndef __NN_MATRIX_H__
 #define __NN_MATRIX_H__
 
+#include "nn_types.h"
+
 // -----------------------------------------------------------------------------
 // Types.
 // -----------------------------------------------------------------------------
@@ -28,10 +30,12 @@ typedef struct _nn_f_matrix_meta
 // -------------------------------------
 // Matrix related.
 // -------------------------------------
-void new_nn_f_matrix(   const nn_f_matrix_meta * const meta,
+void new_nn_f_matrix(   CONTEXT,
+                        const nn_f_matrix_meta * const meta,
                         nn_f_matrix * const matrix  );
 
-void destroy_nn_matrix( nn_f_matrix * const matrix  );
+void destroy_nn_matrix( CONTEXT,
+                        nn_f_matrix * const matrix  );
 
-#endif
+#endif // __NN_MATRIX_H__
 
