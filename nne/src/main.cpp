@@ -3,11 +3,11 @@
 
 #include <QDebug>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-    // qDebug() << "Max count: " << QThreadPool::globalInstance()->maxThreadCount();
+    // qDebug() << "Max count: " <<
+    // QThreadPool::globalInstance()->maxThreadCount();
     MainWindow w;
     w.show();
 
