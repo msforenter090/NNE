@@ -6,6 +6,7 @@
 
 void *allocate (const unsigned int bytes, const unsigned short alignment);
 void deallocate (void *memory);
+void log_callback_info(const byte *message, const unsigned int length);
 nn_error nn_context_create (nn_context *context);
 
 void test_nn_context_create_success (void **state);

@@ -22,10 +22,8 @@ int main(void) {
     // Context test.
     // -------------------------------------------------------------------------
     const struct CMUnitTest test_context[] = {
-        cmocka_unit_test_setup_teardown(test_nn_context_create_success, NULL,
-                                        NULL),
-        cmocka_unit_test_setup_teardown(test_nn_context_destroy_success, NULL,
-                                        NULL),
+        cmocka_unit_test_setup_teardown(test_nn_context_create_success, NULL, NULL),
+        cmocka_unit_test_setup_teardown(test_nn_context_destroy_success, NULL, NULL),
         {0}};
 
     // -------------------------------------------------------------------------
@@ -47,8 +45,8 @@ int main(void) {
      * needed, then NULL may be passed instead */
 
     int failed =
-        cmocka_run_group_tests(test_context, NULL, NULL) +
-        cmocka_run_group_tests(test_platform, setup_context, teardown_context);
+        cmocka_run_group_tests(test_context, NULL, NULL);// +
+//        cmocka_run_group_tests(test_platform, setup_context, teardown_context);
 
     return failed;
 }

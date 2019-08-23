@@ -3,6 +3,8 @@
 #include "nn_context.h"
 #include "test_nn_include.h"
 
+#include <stdio.h>
+
 void *allocate(const unsigned int bytes, const unsigned short alignment) {
     return aligned_alloc(alignment, bytes);
 }

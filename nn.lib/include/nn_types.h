@@ -40,23 +40,6 @@ typedef void (*nn_error_callback)(const byte *message,
                                   const unsigned int length);
 
 // -----------------------------------------------------------------------------
-// List.
-// -----------------------------------------------------------------------------
-// TODO: Consider to remove.
-// struct _nn_data {
-//     byte *key;
-//     byte *value;
-// };
-//
-// struct _nn_list_node {
-//     struct _nn_list_node *next;
-//     struct _nn_data payload;
-// };
-
-// struct _nn_list {
-//    struct _nn_list_node *node;
-// };
-// -----------------------------------------------------------------------------
 // Context.
 // -----------------------------------------------------------------------------
 struct _nn_context {
@@ -86,10 +69,6 @@ struct _nn_device;
 typedef struct _nn_context *nn_context;
 typedef struct _nn_platform *nn_platform;
 typedef struct _nn_device *nn_device;
-
-// typedef struct _nn_data *nn_data;
-// typedef struct _nn_list_node *nn_list_node;
-// typedef struct _nn_list *nn_list;
 
 #define CONTEXT nn_context context
 
