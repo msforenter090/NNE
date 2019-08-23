@@ -21,7 +21,7 @@ set(SRC_FILES           ${SRC_DIR}/null.c)
 set(CMAKE_SKIP_RPATH, TRUE)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_C_VISIBILITY_PRESET hidden)
-clangformat_setup(${PUBLIC_HEADERS} ${SRC_FILES})
+#clangformat_setup(${PUBLIC_HEADERS} ${SRC_FILES})
 
 # ------------------------------------------------------------------------------
 # Create the library and target.

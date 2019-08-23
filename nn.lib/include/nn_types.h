@@ -32,9 +32,9 @@ typedef unsigned char ubyte;
 typedef void *(*nn_allocate)(const unsigned int bytes,
                              const unsigned short alignment);
 typedef void (*nn_deallocate)(void *memory);
-typedef void (*nn_info_callback)(const byte const *message,
+typedef void (*nn_info_callback)(const byte *message,
                                  const unsigned int length);
-typedef void (*nn_warning_callback)(const byte const *message,
+typedef void (*nn_warning_callback)(const byte *message,
                                     const unsigned int length);
 typedef void (*nn_error_callback)(const byte *message,
                                   const unsigned int length);

@@ -1,7 +1,6 @@
 #include "test_nn_include.h"
 
 #include "test_nn_context.h"
-#include "test_nn_list.h"
 #include "test_nn_platform.h"
 
 int setup_context(void **state) {
@@ -30,18 +29,7 @@ int main(void) {
         {0}};
 
     // -------------------------------------------------------------------------
-    // List test.
-    // -------------------------------------------------------------------------
-    const struct CMUnitTest test_list[] = {
-        cmocka_unit_test_setup_teardown(test_nn_list_new_node_success, NULL,
-                                        NULL),
-        cmocka_unit_test_setup_teardown(test_nn_list_init_success, NULL, NULL),
-        cmocka_unit_test_setup_teardown(test_nn_list_size_success, NULL, NULL),
-        cmocka_unit_test_setup_teardown(test_nn_list_free_success, NULL, NULL),
-        {0}};
-
-    // -------------------------------------------------------------------------
-    // List test.
+    // Platform test.
     // -------------------------------------------------------------------------
     const struct CMUnitTest test_platform[] = {
         cmocka_unit_test_setup_teardown(test_nn_platform_count_success, NULL,
@@ -60,7 +48,6 @@ int main(void) {
 
     int failed =
         cmocka_run_group_tests(test_context, NULL, NULL) +
-        cmocka_run_group_tests(test_list, setup_context, teardown_context) +
         cmocka_run_group_tests(test_platform, setup_context, teardown_context);
 
     return failed;

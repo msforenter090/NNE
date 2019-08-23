@@ -14,20 +14,15 @@ set(SRC_DIR             "src")
 
 set(PUBLIC_HEADERS      ${PUBLIC_HEADER_DIR}/test_nn_context.h
                         ${PUBLIC_HEADER_DIR}/test_nn_include.h
-                        ${PUBLIC_HEADER_DIR}/test_nn_list.h
                         ${PUBLIC_HEADER_DIR}/test_nn_platform.h
                         ${PUBLIC_HEADER_DIR}/test_state.h )
 
 set(SRC_FILES           ${SRC_DIR}/main.c
                         ${SRC_DIR}/test_nn_context.c
-                        ${SRC_DIR}/test_nn_list.c
                         ${SRC_DIR}/test_nn_platform.c )
 
 set(CMAKE_SKIP_RPATH, TRUE)
 
-# ------------------------------------------------------------------------------
-# Dependencies.
-# ------------------------------------------------------------------------------
 find_package(nn)
 
 # ------------------------------------------------------------------------------
@@ -44,6 +39,13 @@ target_link_libraries(${TARGET} -lnn -lcmocka -lOpenCL)
 target_include_directories  (${TARGET} PRIVATE include)
 set_target_properties       (${TARGET} PROPERTIES VERSION ${PROJECT_VERSION})
 set_target_properties       (${TARGET} PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
+# ------------------------------------------------------------------------------
+# Dependencies.
+# ------------------------------------------------------------------------------
+find_package(nn.common)
+target_include_directories(${TARGET} PUBLIC ${NN_COMMON_INCLUDE_DIR})
+target_link_directories(${TARGET} PUBLIC ${NN_COMMON_LIBRARY_DIR})
 
 # ------------------------------------------------------------------------------
 # Compile options.

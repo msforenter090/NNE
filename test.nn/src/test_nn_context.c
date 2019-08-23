@@ -9,8 +9,13 @@ void *allocate(const unsigned int bytes, const unsigned short alignment) {
 
 void deallocate(void *memory) { free(memory); }
 
+void log_callback_info(const byte *message, const unsigned int length) {
+    printf("%s", message);
+}
+
 nn_error nn_context_create(nn_context *context) {
-    return context_new(context, allocate, deallocate);
+    return context_new(context, allocate, deallocate, log_callback_info, log_callback_info,
+            log_callback_info);
 }
 
 // -----------------------------------------------------------------------------
