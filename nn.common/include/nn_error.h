@@ -1,6 +1,6 @@
 // =================================================================================================
 // Project: nn library
-// Platform info extraction, network training.
+// Common constructs used by nn.library and nn.library client.
 //
 // File information:
 // Interface for public consumption.
@@ -15,11 +15,6 @@
 #ifndef __NN_ERROR_H__
 #define __NN_ERROR_H__
 
-#include "nn_types.h"
-
-// -----------------------------------------------------------------------------
-// Error text messages.
-// -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 // Error codes.
 // -----------------------------------------------------------------------------

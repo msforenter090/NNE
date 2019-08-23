@@ -16,8 +16,9 @@
 #define __CONTEXT_H__
 
 #include "nn_defs.h"
-#include "nn_error.h"
 #include "nn_types.h"
+
+#include "nn.common/nn_error.h"
 
 extern DLL_PUBLIC nn_error context_new(nn_context *context,
                                        nn_allocate allocate,

@@ -32,12 +32,12 @@ typedef unsigned char ubyte;
 typedef void *(*nn_allocate)(const unsigned int bytes,
                              const unsigned short alignment);
 typedef void (*nn_deallocate)(void *memory);
-typedef void (*nn_info_callback)(const unsigned int bytes,
-                                 const unsigned short alignment);
-typedef void (*nn_warning_callback)(const unsigned int bytes,
-                                    const unsigned short alignment);
-typedef void (*nn_error_callback)(const unsigned int bytes,
-                                  const unsigned short alignment);
+typedef void (*nn_info_callback)(const byte const *message,
+                                 const unsigned int length);
+typedef void (*nn_warning_callback)(const byte const *message,
+                                    const unsigned int length);
+typedef void (*nn_error_callback)(const byte *message,
+                                  const unsigned int length);
 
 // -----------------------------------------------------------------------------
 // List.
@@ -87,9 +87,9 @@ typedef struct _nn_context *nn_context;
 typedef struct _nn_platform *nn_platform;
 typedef struct _nn_device *nn_device;
 
-typedef struct _nn_data *nn_data;
-typedef struct _nn_list_node *nn_list_node;
-typedef struct _nn_list *nn_list;
+// typedef struct _nn_data *nn_data;
+// typedef struct _nn_list_node *nn_list_node;
+// typedef struct _nn_list *nn_list;
 
 #define CONTEXT nn_context context
 

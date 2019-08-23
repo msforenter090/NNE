@@ -15,8 +15,10 @@
 #define __NN_RUNTIME_H__
 
 #include "nn_defs.h"
-#include "nn_error.h"
+#include "nn_types.h"
 #include "nn_types_internal.h"
+
+#include "nn.common/nn_error.h"
 
 nn_error nn_runtime_platform_count(CONTEXT, short *const count);
 nn_error nn_runtime_platforms(CONTEXT, cl_platform_id **platforms);

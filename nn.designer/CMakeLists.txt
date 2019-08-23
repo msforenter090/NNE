@@ -1,5 +1,5 @@
 #set(MIN_CMAKE_VERSION 3.10)
-set(TARGET nne)
+set(TARGET nn.designer)
 
 cmake_minimum_required(VERSION ${MIN_CMAKE_VERSION})
 project(${TARGET} LANGUAGES CXX)
@@ -54,7 +54,7 @@ link_directories(${NN_LIBRARY})
 # ------------------------------------------------------------------------------
 add_executable(${TARGET} WIN32 ${SRC_FILES} ${UI_FILES})
 target_link_libraries(${TARGET} Qt5::Widgets)
-target_link_libraries(${TARGET} -lnn)
+#target_link_libraries(${TARGET} -lnn)
 
 # ------------------------------------------------------------------------------
 # Install.

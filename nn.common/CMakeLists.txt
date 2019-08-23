@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # Constants.
 # ------------------------------------------------------------------------------
-set(TARGET nn)
+set(TARGET nn.common)
 
 # ------------------------------------------------------------------------------
 # Setup.
@@ -12,20 +12,11 @@ project(${TARGET} VERSION 0.0.1)
 set(PUBLIC_HEADER_DIR   "include")
 set(SRC_DIR             "src")
 
-set(PUBLIC_HEADERS      ${PUBLIC_HEADER_DIR}/nn_context.h
-                        ${PUBLIC_HEADER_DIR}/nn_defs.h
-                        ${PUBLIC_HEADER_DIR}/nn_matrix.h
-                        ${PUBLIC_HEADER_DIR}/nn_platform.h
-                        ${PUBLIC_HEADER_DIR}/nn_types.h
+set(PUBLIC_HEADERS      ${PUBLIC_HEADER_DIR}/nn_defs.h
+                        ${PUBLIC_HEADER_DIR}/nn_error.h
                         )
 
-set(SRC_FILES           ${SRC_DIR}/nn_context.c
-                        ${SRC_DIR}/nn_matrix.c
-                        ${SRC_DIR}/nn_platform.c
-                        ${SRC_DIR}/nn_runtime.c
-                        ${SRC_DIR}/nn_runtime.h
-                        ${SRC_DIR}/nn_types_internal.h
-                        )
+set(SRC_FILES           ${SRC_DIR}/null.c)
 
 set(CMAKE_SKIP_RPATH, TRUE)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -47,17 +38,8 @@ set_target_properties       (${TARGET} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_BUILD_TYPE Debug)
 
 # ------------------------------------------------------------------------------
-# Dependencies.
-# ------------------------------------------------------------------------------
-find_package(nn.common)
-
-# TODO: Print out package details.
-target_include_directories(${TARGET} PUBLIC ${NN_COMMON_INCLUDE_DIR})
-target_link_directories(${TARGET} PUBLIC ${NN_COMMON_LIBRARY_DIR})
-
-# ------------------------------------------------------------------------------
 # Install.
 # ------------------------------------------------------------------------------
 install(TARGETS ${TARGET} DESTINATION ${CMAKE_INSTALL_PREFIX})
-install(FILES ${PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/nn.lib)
+install(FILES ${PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/nn.common)
 

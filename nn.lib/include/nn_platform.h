@@ -16,8 +16,9 @@
 #define __PLATFORM_H__
 
 #include "nn_defs.h"
-#include "nn_error.h"
 #include "nn_types.h"
+
+#include "nn.common/nn_error.h"
 
 // -----------------------------------------------------------------------------
 // Platform.
