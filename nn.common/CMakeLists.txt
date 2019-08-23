@@ -14,6 +14,7 @@ set(SRC_DIR             "src")
 
 set(PUBLIC_HEADERS      ${PUBLIC_HEADER_DIR}/nn_defs.h
                         ${PUBLIC_HEADER_DIR}/nn_error.h
+                        ${PUBLIC_HEADER_DIR}/nn_util.h
                         )
 
 set(SRC_FILES           ${SRC_DIR}/null.c)

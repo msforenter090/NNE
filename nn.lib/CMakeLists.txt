@@ -19,7 +19,8 @@ set(PUBLIC_HEADERS      ${PUBLIC_HEADER_DIR}/nn_context.h
                         ${PUBLIC_HEADER_DIR}/nn_types.h
                         )
 
-set(SRC_FILES           ${SRC_DIR}/nn_context.c
+set(SRC_FILES           ${SRC_DIR}/nn_constants.h
+                        ${SRC_DIR}/nn_context.c
                         ${SRC_DIR}/nn_matrix.c
                         ${SRC_DIR}/nn_platform.c
                         ${SRC_DIR}/nn_runtime.c

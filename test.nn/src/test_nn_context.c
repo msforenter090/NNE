@@ -1,47 +1,42 @@
 #include "test_nn_context.h"
 
+#include <stdio.h>
 #include "nn_context.h"
 #include "test_nn_include.h"
+#include "test_nn_callback.h"
 
-#include <stdio.h>
-
-void *allocate(const unsigned int bytes, const unsigned short alignment) {
-    return aligned_alloc(alignment, bytes);
-}
-
-void deallocate(void *memory) { free(memory); }
-
-void log_callback_info(const byte *message, const unsigned int length) {
-    printf("%s", message);
-}
-
-nn_error nn_context_create(nn_context *context) {
-    return context_new(context, allocate, deallocate, log_callback_info, log_callback_info,
-            log_callback_info);
+nn_error nn_context_create(nn_host_context *context) {
+    return new_nn_context(context, nn_callback_allocate, nn_callback_deallocate, 
+                            nn_callback_log, nn_callback_log, nn_callback_log);
 }
 
 // -----------------------------------------------------------------------------
 // Test.
 // -----------------------------------------------------------------------------
-void test_nn_context_create_success(void **state) {
+void test_new_nn_context_create_success(void **state) {
     UNUSED(state);
 
-    nn_context context = NULL;
+    nn_host_context context = NULL;
     nn_error error = nn_context_create(&context);
 
     ASSERT_OK(error);
     ASSERT_NOT_NULL(context);
 
-    context_delete(context);
+    delete_nn_context(context, NULL, NULL);
 }
 
-void test_nn_context_destroy_success(void **state) {
+void test_new_nn_system_info_create_success(void **state) {
     UNUSED(state);
 
-    nn_context context = NULL;
+    nn_host_context context = NULL;
     nn_error error = nn_context_create(&context);
 
+    nn_system_info system_info = NULL;
+    new_nn_system_info(context, &system_info);
+
     ASSERT_OK(error);
-    ASSERT_NOT_NULL(context);
-    context_delete(context);
+    ASSERT_NOT_NULL(system_info);
+
+    delete_nn_system_info(context, system_info, NULL);
+    delete_nn_context(context, NULL, NULL);
 }

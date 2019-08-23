@@ -12,12 +12,14 @@ project(${TARGET} VERSION 0.0.1)
 set(PUBLIC_HEADER_DIR   "include")
 set(SRC_DIR             "src")
 
-set(PUBLIC_HEADERS      ${PUBLIC_HEADER_DIR}/test_nn_context.h
+set(PUBLIC_HEADERS      ${PUBLIC_HEADER_DIR}/test_nn_callback.h
+                        ${PUBLIC_HEADER_DIR}/test_nn_context.h
                         ${PUBLIC_HEADER_DIR}/test_nn_include.h
                         ${PUBLIC_HEADER_DIR}/test_nn_platform.h
                         ${PUBLIC_HEADER_DIR}/test_state.h )
 
-set(SRC_FILES           ${SRC_DIR}/main.c
+set(SRC_FILES           ${SRC_DIR}/test_nn_callback.c
+                        ${SRC_DIR}/main.c
                         ${SRC_DIR}/test_nn_context.c
                         ${SRC_DIR}/test_nn_platform.c )
 

@@ -1,22 +1,43 @@
 #include "nn_context.h"
 
-nn_error context_new(nn_context *context, nn_allocate allocate,
-                     nn_deallocate deallocate, nn_info_callback info,
-                     nn_warning_callback warning, nn_error_callback error) {
-    *context = NULL;
+#include "nn_runtime.h"
+#include <string.h>
+
+nn_error new_nn_context(nn_host_context *host_context, nn_allocate allocate,
+                        nn_deallocate deallocate, nn_info_callback info,
+                        nn_warning_callback warning, nn_error_callback error) {
+    *host_context = NULL;
     // Alignment must be size of the largest field in the structure.
-    nn_context new_context =
-        (nn_context)allocate(sizeof(struct _nn_context), sizeof(nn_allocate));
+    nn_host_context new_context =
+        (nn_host_context)allocate(sizeof(struct _nn_host_context), sizeof(nn_allocate));
     new_context->allocate = allocate;
     new_context->deallocate = deallocate;
     new_context->info_logger = info;
     new_context->warning_logger = warning;
     new_context->error_logger = error;
-    *context = new_context;
+    *host_context = new_context;
     return OK;
 }
 
-nn_error context_delete(CONTEXT) {
-    context->deallocate(context);
+nn_error new_nn_system_info(nn_host_context host_context, nn_system_info *system_info) {
+    *system_info = (nn_system_info)host_context->allocate(sizeof(struct _nn_system_info), PTR_SIZE);
+    memset(*system_info, 0, sizeof(struct _nn_system_info));
+    return nn_runtime_platforms(host_context, *system_info, NULL);
+}
+
+nn_error new_nn_system_context(nn_host_context host_context, nn_system_info system_info,
+                               nn_system_context *system_context) {
+    return OK;
+}
+
+nn_error delete_nn_system_context(CONTEXT) { return OK; }
+
+nn_error delete_nn_system_info(CONTEXT) { 
+    host_context->deallocate(system_info);
+    return OK;
+}
+
+nn_error delete_nn_context(CONTEXT) {
+    host_context->deallocate(host_context);
     return OK;
 }

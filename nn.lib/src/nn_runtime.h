@@ -20,24 +20,15 @@
 
 #include "nn.common/nn_error.h"
 
-nn_error nn_runtime_platform_count(CONTEXT, short *const count);
-nn_error nn_runtime_platforms(CONTEXT, cl_platform_id **platforms);
-nn_error nn_runtime_platform_info(CONTEXT, cl_platform_id platform,
-                                  byte *values[]);
-nn_error nn_runtime_platform_device_count(CONTEXT, cl_platform_id platform,
-                                          short *const count);
-nn_error nn_runtime_platform_devices(CONTEXT, cl_platform_id platform,
-                                     cl_device_id **devices);
-nn_error nn_runtime_platform_devices_map(CONTEXT,
-                                         nn_tuple_platform_devices **map);
+// -----------------------------------------------------------------------------
+// Platform.
+// -----------------------------------------------------------------------------
+nn_error nn_runtime_platforms(CONTEXT);
 
-// TODO: This should be filtering by properties.
-nn_error nn_runtime_platform_filter_devices_by_properties(
-    CONTEXT, nn_tuple_platform_devices *map, nn_tuple_platform_devices *pair);
-nn_error nn_runtime_device_properties(CONTEXT, cl_device_id device,
-                                      cl_device_info *params,
-                                      const short param_length, void *out[]);
-nn_error nn_runtime_default_context(CONTEXT, nn_tuple_platform_devices *map[],
-                                    cl_device_info *info, const short length);
+// -----------------------------------------------------------------------------
+// Devices.
+// -----------------------------------------------------------------------------
+// nn_error nn_runtime_devices(CONTEXT);
+// nn_error nn_runtime_devices_info(CONTEXT, nn_system_info system_info);
 
 #endif // __NN_RUNTIME_H__

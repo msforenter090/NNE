@@ -21,4 +21,5 @@ _deps
 bin
 build*
 tags
+.vscode
 # # End of https://www.gitignore.io/api/cmake

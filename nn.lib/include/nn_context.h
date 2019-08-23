@@ -20,13 +20,17 @@
 
 #include "nn.common/nn_error.h"
 
-extern DLL_PUBLIC nn_error context_new(nn_context *context,
-                                       nn_allocate allocate,
-                                       nn_deallocate deallocate,
-                                       nn_info_callback info,
-                                       nn_warning_callback warning,
-                                       nn_error_callback error);
+extern DLL_PUBLIC nn_error new_nn_context(nn_host_context *host_context, nn_allocate allocate,
+                                          nn_deallocate deallocate, nn_info_callback info,
+                                          nn_warning_callback warning, nn_error_callback error);
+extern DLL_PUBLIC nn_error new_nn_system_info(nn_host_context host_context,
+                                              nn_system_info *system_info);
+extern DLL_PUBLIC nn_error new_nn_system_context(nn_host_context host_context,
+                                                 nn_system_info system_info,
+                                                 nn_system_context *system_context);
 
-extern DLL_PUBLIC nn_error context_delete(CONTEXT);
+extern DLL_PUBLIC nn_error delete_nn_system_context(CONTEXT);
+extern DLL_PUBLIC nn_error delete_nn_system_info(CONTEXT);
+extern DLL_PUBLIC nn_error delete_nn_context(CONTEXT);
 
 #endif // __CONTEXT_H__

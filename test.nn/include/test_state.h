@@ -3,9 +3,10 @@
 
 #include "nn_context.h"
 
-typedef struct
-{
-    nn_context context;
+typedef struct {
+    nn_host_context context;
+    nn_system_info system_info;
+    nn_system_context system_context;
 } state_context;
 
 #endif // __TEST_STATE_H__
