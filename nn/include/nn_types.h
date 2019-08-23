@@ -1,3 +1,17 @@
+// =================================================================================================
+// Project: nn library
+// Platform info extraction, network training.
+//
+// File information:
+// Interface for public consumption.
+// Author......... Milan Stanarevic <msforenter090@gmail.com>
+// Changed at..... 2019-07-31
+// License........ MIT license
+// Tab-size....... 4 spaces
+// Line length.... 100 characters
+//
+// =================================================================================================
+
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
@@ -18,23 +32,30 @@ typedef unsigned char ubyte;
 typedef void *(*nn_allocate)(const unsigned int bytes,
                              const unsigned short alignment);
 typedef void (*nn_deallocate)(void *memory);
+typedef void (*nn_info_callback)(const unsigned int bytes,
+                                 const unsigned short alignment);
+typedef void (*nn_warning_callback)(const unsigned int bytes,
+                                    const unsigned short alignment);
+typedef void (*nn_error_callback)(const unsigned int bytes,
+                                  const unsigned short alignment);
 
 // -----------------------------------------------------------------------------
 // List.
 // -----------------------------------------------------------------------------
-struct _nn_data {
-    byte *key;
-    byte *value;
-};
+// TODO: Consider to remove.
+// struct _nn_data {
+//     byte *key;
+//     byte *value;
+// };
+//
+// struct _nn_list_node {
+//     struct _nn_list_node *next;
+//     struct _nn_data payload;
+// };
 
-struct _nn_list_node {
-    struct _nn_list_node *next;
-    struct _nn_data payload;
-};
-
-struct _nn_list {
-    struct _nn_list_node *node;
-};
+// struct _nn_list {
+//    struct _nn_list_node *node;
+// };
 // -----------------------------------------------------------------------------
 // Context.
 // -----------------------------------------------------------------------------
@@ -44,6 +65,13 @@ struct _nn_context {
     // -------------------------------------------------------------------------
     nn_allocate allocate;
     nn_deallocate deallocate;
+
+    // -------------------------------------------------------------------------
+    // Logging.
+    // -------------------------------------------------------------------------
+    nn_info_callback info_logger;
+    nn_warning_callback warning_logger;
+    nn_error_callback error_logger;
 };
 
 // -----------------------------------------------------------------------------

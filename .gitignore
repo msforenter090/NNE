@@ -20,4 +20,5 @@ _deps
 
 bin
 build*
+tags
 # # End of https://www.gitignore.io/api/cmake

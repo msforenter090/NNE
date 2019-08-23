@@ -1,3 +1,17 @@
+// =================================================================================================
+// Project: nn library
+// Platform info extraction, network training.
+//
+// File information:
+// Interface for public consumption.
+// Author......... Milan Stanarevic <msforenter090@gmail.com>
+// Changed at..... 2019-08-23
+// License........ MIT license
+// Tab-size....... 4 spaces
+// Line length.... 100 characters
+//
+// =================================================================================================
+
 #ifndef __DEFS_H__
 #define __DEFS_H__
 

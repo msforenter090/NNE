@@ -4,7 +4,7 @@
 #include <CL/cl.h>
 
 // -----------------------------------------------------------------------------
-// openCL types.
+// Mapping for external types.
 // -----------------------------------------------------------------------------
 struct _nn_platform {
     cl_platform_id platform_id;
