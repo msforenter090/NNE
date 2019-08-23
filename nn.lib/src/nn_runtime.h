@@ -24,12 +24,10 @@ nn_error nn_runtime_platform_count(CONTEXT, short *const count);
 nn_error nn_runtime_platforms(CONTEXT, cl_platform_id **platforms);
 nn_error nn_runtime_platform_info(CONTEXT, cl_platform_id platform,
                                   byte *values[]);
-
 nn_error nn_runtime_platform_device_count(CONTEXT, cl_platform_id platform,
                                           short *const count);
 nn_error nn_runtime_platform_devices(CONTEXT, cl_platform_id platform,
                                      cl_device_id **devices);
-
 nn_error nn_runtime_platform_devices_map(CONTEXT,
                                          nn_tuple_platform_devices **map);
 
