@@ -52,7 +52,6 @@ set(CMAKE_BUILD_TYPE Debug)
 # ------------------------------------------------------------------------------
 find_package(nn.common)
 
-# TODO: Print out package details.
 target_include_directories(${TARGET} PUBLIC ${NN_COMMON_INCLUDE_DIR})
 target_link_directories(${TARGET} PUBLIC ${NN_COMMON_LIBRARY_DIR})
 

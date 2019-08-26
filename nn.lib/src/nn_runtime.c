@@ -14,8 +14,7 @@ nn_error nn_runtime_devices(CONTEXT) {
     cl_uint total_devices = 0;
     for (unsigned short i = 0; system_info->platforms[i] != NULL; i++) {
         cl_uint devices_per_platform = 0;
-        clGetDeviceIDs(system_info->platforms[i], CL_DEVICE_TYPE_ALL, 0, NULL,
-                       &devices_per_platform);
+        clGetDeviceIDs(system_info->platforms[i], CL_DEVICE_TYPE_ALL, 0, NULL, &devices_per_platform);
         clGetDeviceIDs(system_info->platforms[i], CL_DEVICE_TYPE_ALL, devices_per_platform,
                        system_info->devices + devices_per_platform, NULL);
         for (unsigned short j = 0; j < devices_per_platform; j++) {
@@ -28,9 +27,10 @@ nn_error nn_runtime_devices(CONTEXT) {
 
 nn_error nn_runtime_devices_info(CONTEXT) {
     cl_device_id device = NULL;
-    for(unsigned short i = 0; system_info->devices[i] != NULL; i++) {
+    for (unsigned short i = 0; system_info->devices[i] != NULL; i++) {
         device = system_info->devices[i];
         nn_device_info *info = &(system_info->device_info[i]);
+        // clang-format off
         clGetDeviceInfo(device, CL_DEVICE_AVAILABLE, sizeof(info->available), &(info->available), NULL);
         clGetDeviceInfo(device, CL_DEVICE_COMPILER_AVAILABLE, sizeof(info->compiler), &(info->compiler), NULL);
         clGetDeviceInfo(device, CL_DEVICE_ENDIAN_LITTLE, sizeof(info->little_endian), &(info->little_endian), NULL);
@@ -46,6 +46,7 @@ nn_error nn_runtime_devices_info(CONTEXT) {
         clGetDeviceInfo(device, CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(info->max_work_group_size), &(info->max_work_group_size), NULL);
         clGetDeviceInfo(device, CL_DEVICE_MAX_WORK_ITEM_SIZES, sizeof(info->max_work_item_sizes), &(info->max_work_item_sizes), NULL);
         clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(info->device_type), &(info->device_type), NULL);
+        // clang-format on
     }
     return OK;
 }

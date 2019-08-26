@@ -1,15 +1,13 @@
 #include "nn_context.h"
 
-#include <string.h>
 #include "nn_runtime.h"
+#include <string.h>
 
-nn_error new_nn_context(nn_host_context *host_context, nn_allocate allocate,
-                        nn_deallocate deallocate, nn_info_callback info,
-                        nn_warning_callback warning, nn_error_callback error) {
+nn_error new_nn_context(nn_host_context *host_context, nn_allocate allocate, nn_deallocate deallocate,
+                        nn_info_callback info, nn_warning_callback warning, nn_error_callback error) {
     *host_context = NULL;
     // Alignment must be size of the largest field in the structure.
-    nn_host_context new_context =
-        (nn_host_context)allocate(sizeof(struct _nn_host_context), sizeof(nn_allocate));
+    nn_host_context new_context = (nn_host_context)allocate(sizeof(struct _nn_host_context), sizeof(nn_allocate));
     new_context->allocate = allocate;
     new_context->deallocate = deallocate;
     new_context->info_logger = info;
@@ -36,7 +34,7 @@ nn_error new_nn_system_context(nn_host_context host_context, nn_system_info syst
 
 nn_error delete_nn_system_context(CONTEXT) { return OK; }
 
-nn_error delete_nn_system_info(CONTEXT) { 
+nn_error delete_nn_system_info(CONTEXT) {
     host_context->deallocate(system_info);
     return OK;
 }

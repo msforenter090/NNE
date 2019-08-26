@@ -19,13 +19,13 @@
 // Error codes.
 // -----------------------------------------------------------------------------
 // General error [0 - 100]
-static const unsigned int CODE_OK = 0;
-static const unsigned int CODE_FAIL = 1;
-static const unsigned int CODE_UNKNOWN = 2;
-static const unsigned int CODE_INVALID_PARAM = 3;
+#define CODE_OK = 0
+#define CODE_FAIL = 1
+#define CODE_UNKNOWN = 2
+#define CODE_INVALID_PARAM = 3
 
 // Memory errors [101 - 200]
-static const unsigned int CODE_NO_MEMORY = 101;
+#define CODE_NO_MEMORY = 101;
 
 // -----------------------------------------------------------------------------
 // Types.
