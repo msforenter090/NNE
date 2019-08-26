@@ -16,7 +16,7 @@ nn_error nn_runtime_devices(CONTEXT) {
         cl_uint devices_per_platform = 0;
         clGetDeviceIDs(system_info->platforms[i], CL_DEVICE_TYPE_ALL, 0, NULL, &devices_per_platform);
         clGetDeviceIDs(system_info->platforms[i], CL_DEVICE_TYPE_ALL, devices_per_platform,
-                       system_info->devices + devices_per_platform, NULL);
+                       system_info->devices + total_devices, NULL);
         for (unsigned short j = 0; j < devices_per_platform; j++) {
             system_info->device_platform_mapping[total_devices + j] = i;
         }

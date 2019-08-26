@@ -25,7 +25,7 @@ struct _nn_device_info {
     cl_device_local_mem_type local_memory_type;
     cl_uint max_compute_units;
     cl_ulong max_memory_alloc_size; // Max size of memory object allocation in bytes.
-    cl_uint max_work_group_size;    // Maximum number of work-items in a work-group executing a kernel
+    size_t max_work_group_size;     // Maximum number of work-items in a work-group executing a kernel
                                     // using the data parallel execution model.
     size_t max_work_item_sizes[3];  // Maximum number of work-items that can be specified in each
                                     // dimension of the work-group.

@@ -19,13 +19,13 @@
 // Error codes.
 // -----------------------------------------------------------------------------
 // General error [0 - 100]
-#define CODE_OK = 0
-#define CODE_FAIL = 1
-#define CODE_UNKNOWN = 2
-#define CODE_INVALID_PARAM = 3
+#define CODE_OK 0
+#define CODE_FAIL 1
+#define CODE_UNKNOWN 2
+#define CODE_INVALID_PARAM 3
 
 // Memory errors [101 - 200]
-#define CODE_NO_MEMORY = 101;
+#define CODE_NO_MEMORY 101
 
 // -----------------------------------------------------------------------------
 // Types.
