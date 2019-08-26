@@ -28,7 +28,7 @@ nn_error nn_runtime_platforms(CONTEXT);
 // -----------------------------------------------------------------------------
 // Devices.
 // -----------------------------------------------------------------------------
-// nn_error nn_runtime_devices(CONTEXT);
-// nn_error nn_runtime_devices_info(CONTEXT, nn_system_info system_info);
+nn_error nn_runtime_devices(CONTEXT);
+nn_error nn_runtime_devices_info(CONTEXT);
 
 #endif // __NN_RUNTIME_H__

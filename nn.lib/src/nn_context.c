@@ -1,7 +1,7 @@
 #include "nn_context.h"
 
-#include "nn_runtime.h"
 #include <string.h>
+#include "nn_runtime.h"
 
 nn_error new_nn_context(nn_host_context *host_context, nn_allocate allocate,
                         nn_deallocate deallocate, nn_info_callback info,
@@ -22,7 +22,11 @@ nn_error new_nn_context(nn_host_context *host_context, nn_allocate allocate,
 nn_error new_nn_system_info(nn_host_context host_context, nn_system_info *system_info) {
     *system_info = (nn_system_info)host_context->allocate(sizeof(struct _nn_system_info), PTR_SIZE);
     memset(*system_info, 0, sizeof(struct _nn_system_info));
-    return nn_runtime_platforms(host_context, *system_info, NULL);
+    nn_error error;
+    error = nn_runtime_platforms(host_context, *system_info, NULL);
+    error = nn_runtime_devices(host_context, *system_info, NULL);
+    error = nn_runtime_devices_info(host_context, *system_info, NULL);
+    return OK;
 }
 
 nn_error new_nn_system_context(nn_host_context host_context, nn_system_info system_info,
