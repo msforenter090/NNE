@@ -1,12 +1,12 @@
 #include "test_nn_context.h"
 
 #include <stdio.h>
-#include "nn_context.h"
+#include "nn.lib/nn_context.h"
 #include "test_nn_include.h"
 #include "test_nn_callback.h"
 
 nn_error nn_context_create(nn_host_context *context) {
-    return new_nn_context(context, nn_callback_allocate, nn_callback_deallocate, 
+    return new_nn_context(context, nn_callback_allocate, nn_callback_deallocate,
                             nn_callback_log, nn_callback_log, nn_callback_log);
 }
 

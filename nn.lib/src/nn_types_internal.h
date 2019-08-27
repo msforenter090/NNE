@@ -47,6 +47,7 @@ struct _nn_system_context {
     // nn_runtime_platform platform;
     // nn_runtime_device *devces;
     // nn_runtime_device_info *device_info;
+    int a;
 };
 
 #endif // __NN_TYPES_INTERNAL_H__

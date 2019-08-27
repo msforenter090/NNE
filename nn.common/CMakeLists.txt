@@ -32,9 +32,6 @@ add_library(${TARGET} SHARED ${SRC_FILES})
 # ------------------------------------------------------------------------------
 # Set target properties.
 # ------------------------------------------------------------------------------
-target_include_directories  (${TARGET} PRIVATE include)
-target_include_directories  (${TARGET} PRIVATE src)
-set_target_properties       (${TARGET} PROPERTIES VERSION ${PROJECT_VERSION})
 set_target_properties       (${TARGET} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_BUILD_TYPE Debug)
 
@@ -43,4 +40,3 @@ set(CMAKE_BUILD_TYPE Debug)
 # ------------------------------------------------------------------------------
 install(TARGETS ${TARGET} DESTINATION ${CMAKE_INSTALL_PREFIX})
 install(FILES ${PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/nn.common)
-

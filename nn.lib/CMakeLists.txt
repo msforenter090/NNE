@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # Constants.
 # ------------------------------------------------------------------------------
-set(TARGET nn)
+set(TARGET nn.lib)
 
 # ------------------------------------------------------------------------------
 # Setup.
@@ -31,7 +31,7 @@ set(SRC_FILES           ${SRC_DIR}/nn_constants.h
 set(CMAKE_SKIP_RPATH, TRUE)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_C_VISIBILITY_PRESET hidden)
-clangformat_setup(${PUBLIC_HEADERS} ${SRC_FILES})
+#clangformat_setup(${PUBLIC_HEADERS} ${SRC_FILES})
 
 # ------------------------------------------------------------------------------
 # Create the library and target.
@@ -41,9 +41,7 @@ add_library(${TARGET} SHARED ${SRC_FILES})
 # ------------------------------------------------------------------------------
 # Set target properties.
 # ------------------------------------------------------------------------------
-target_include_directories  (${TARGET} PRIVATE include)
-target_include_directories  (${TARGET} PRIVATE src)
-set_target_properties       (${TARGET} PROPERTIES VERSION ${PROJECT_VERSION})
+include_directories         (include src)
 set_target_properties       (${TARGET} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_BUILD_TYPE Debug)
 
@@ -51,9 +49,12 @@ set(CMAKE_BUILD_TYPE Debug)
 # Dependencies.
 # ------------------------------------------------------------------------------
 find_package(nn.common)
+find_package(OpenCL)
 
-target_include_directories(${TARGET} PUBLIC ${NN_COMMON_INCLUDE_DIR})
-target_link_directories(${TARGET} PUBLIC ${NN_COMMON_LIBRARY_DIR})
+target_include_directories(${TARGET}    PUBLIC ${NN_COMMON_INCLUDE_DIR}
+                                        PRIVATE ${OpenCL_INCLUDE_DIRS})
+target_link_directories(${TARGET} PRIVATE ${OpenCL_LIBRARY})
+target_link_libraries(${TARGET} LINK_PRIVATE debug ${OpenCL_LIBRARIES})
 
 # ------------------------------------------------------------------------------
 # Install.

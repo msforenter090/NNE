@@ -1,7 +1,7 @@
 #ifndef __CALLBACK_H__
 #define __CALLBACK_H__
 
-#include "nn_types.h"
+#include "nn.lib/nn_types.h"
 #include "nn.common/nn_error.h"
 
 void *nn_callback_allocate (const unsigned int bytes, const unsigned short alignment);

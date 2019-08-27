@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # Constants.
 # ------------------------------------------------------------------------------
-set(TARGET test_nn)
+set(TARGET test.nn)
 
 # ------------------------------------------------------------------------------
 # Setup.
@@ -25,20 +25,15 @@ set(SRC_FILES           ${SRC_DIR}/test_nn_callback.c
 
 set(CMAKE_SKIP_RPATH, TRUE)
 
-find_package(nn)
-
 # ------------------------------------------------------------------------------
 # Create target.
 # ------------------------------------------------------------------------------
 add_executable(${TARGET} ${SRC_FILES})
-target_include_directories(${TARGET} PUBLIC ${NN_INCLUDE_DIR})
-target_link_directories(${TARGET} PUBLIC ${NN_LIBRARY})
-target_link_libraries(${TARGET} -lnn -lcmocka -lOpenCL)
 
 # ------------------------------------------------------------------------------
 # Set target properties.
 # ------------------------------------------------------------------------------
-target_include_directories  (${TARGET} PRIVATE include)
+include_directories         (include)
 set_target_properties       (${TARGET} PROPERTIES VERSION ${PROJECT_VERSION})
 set_target_properties       (${TARGET} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
@@ -46,14 +41,26 @@ set_target_properties       (${TARGET} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 # Dependencies.
 # ------------------------------------------------------------------------------
 find_package(nn.common)
-target_include_directories(${TARGET} PUBLIC ${NN_COMMON_INCLUDE_DIR})
-target_link_directories(${TARGET} PUBLIC ${NN_COMMON_LIBRARY_DIR})
+find_package(nn.lib)
+#find_package(cmocka)
+
+message(STATUS "Include: " ${NN_INCLUDE_DIR})
+message(STATUS "Libs: " ${NN_LIBRARIES})
+message(STATUS "Libs Path: " ${NN_LIBRARY})
+
+target_include_directories(${TARGET} PUBLIC ${NN_COMMON_INCLUDE_DIR}
+                                            ${NN_INCLUDE_DIR})
+target_link_directories(${TARGET} PUBLIC ${NN_LIBRARY})
+target_link_libraries(${TARGET} cmocka ${NN_LIBRARIES})
+
+#target_include_directories(${TARGET} PUBLIC ${NN_COMMON_INCLUDE_DIR})
+#target_link_directories(${TARGET} PUBLIC ${NN_COMMON_LIBRARY_DIR})
 
 # ------------------------------------------------------------------------------
 # Compile options.
 # ------------------------------------------------------------------------------
 set(CMAKE_BUILD_TYPE Debug)
-target_compile_options(${TARGET} PRIVATE -Wall -Wextra -pedantic)
+target_compile_options(${TARGET} PRIVATE -Wall -pedantic)
 
 #-------------------------------------------------------------------------------
 # Install.

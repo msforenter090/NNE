@@ -1,6 +1,6 @@
 #include "test_nn_platform.h"
 
-#include "nn_platform.h"
+#include "nn.lib/nn_platform.h"
 #include "test_nn_include.h"
 
 void test_nn_platform_count_success(void **state) {

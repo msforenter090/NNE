@@ -18,8 +18,16 @@
 // -----------------------------------------------------------------------------
 // Min values.
 // -----------------------------------------------------------------------------
+#if defined(__GNUC__) || defined(__GNUG__)
 #if __GNUC__ < 4
 #error "Min compiler version error."
+#endif
+#endif
+
+#if defined(_MSC_VER)
+#if _MSC_VER < 1912
+#error "Min compiler version error."
+#endif
 #endif
 
 #endif // __DEFS_H__
