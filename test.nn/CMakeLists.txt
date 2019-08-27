@@ -42,11 +42,7 @@ set_target_properties       (${TARGET} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 # ------------------------------------------------------------------------------
 find_package(nn.common)
 find_package(nn.lib)
-#find_package(cmocka)
-
-message(STATUS "Include: " ${NN_INCLUDE_DIR})
-message(STATUS "Libs: " ${NN_LIBRARIES})
-message(STATUS "Libs Path: " ${NN_LIBRARY})
+find_package(cmocka)
 
 target_include_directories(${TARGET} PUBLIC ${NN_COMMON_INCLUDE_DIR}
                                             ${NN_INCLUDE_DIR})
