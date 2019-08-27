@@ -8,10 +8,10 @@
 # OpenCL_LIBRARY        - the path to the OpenCL library
 
 # This module defines
-# NN_FOUND				- True if NN was found
-# NN_INCLUDE_DIR		- include directories for NN
-# NN_LIBRARIES      	- link against this library to use OpenCL
-# NN_LIBRARY			- the path to the NN library
+# NN_SDK_FOUND          - True if NN was found
+# NN_SDK_INCLUDE_DIR    - include directories for NN
+# NN_SDK_LIBRARIES      - link against this library to use OpenCL
+# NN_SDK_LIBRARY        - the path to the NN library
 
 SET(SEARCH_PATHS
     /usr/local
@@ -19,16 +19,16 @@ SET(SEARCH_PATHS
     ${CMAKE_INSTALL_PREFIX}
 )
 
-FIND_PATH(NN_INCLUDE_DIR nn_context.h
+FIND_PATH(NN_SDK_INCLUDE_DIR nn_context.h
     PATHS ${SEARCH_PATHS}
 )
 
-FIND_LIBRARY(NN_LIBRARY
-    NAMES nn.lib libnn.lib
+FIND_LIBRARY(NN_SDK_LIBRARY
+    NAMES nn.sdk libnn.sdk
     PATHS ${SEARCH_PATHS}
 )
 
-set(NN_FOUND, TRUE)
-set(NN_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
-set(NN_LIBRARY ${CMAKE_INSTALL_PREFIX})
-set(NN_LIBRARIES nn)
+set(NN_SDK_FOUND, TRUE)
+set(NN_SDK_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
+set(NN_SDK_LIBRARY ${CMAKE_INSTALL_PREFIX})
+set(NN_SDK_LIBRARIES nn.sdk)

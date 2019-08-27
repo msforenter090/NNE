@@ -2,7 +2,7 @@
 #define __TEST_NN_INCLUDE_H__
 
 // clang-format off
-#include "nn.lib/nn_types.h"
+#include "nn.sdk/nn_types.h"
 #include "test_state.h"
 
 #include <string.h>

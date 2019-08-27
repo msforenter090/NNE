@@ -24,9 +24,9 @@ include(ClangFormat)
 # ------------------------------------------------------------------------------
 # Add subprojects.
 # ------------------------------------------------------------------------------
-add_subdirectory(nn.common)
-add_subdirectory(nn.lib)
-#add_subdirectory(nn.designer)
+add_subdirectory(nn.sdk.common)
+add_subdirectory(nn.sdk)
+add_subdirectory(nn.designer)
 
-add_subdirectory(test.nn)
+add_subdirectory(test.nn.sdk)
 

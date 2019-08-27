@@ -40,14 +40,14 @@ set_target_properties       (${TARGET} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 # ------------------------------------------------------------------------------
 # Dependencies.
 # ------------------------------------------------------------------------------
-find_package(nn.common)
-find_package(nn.lib)
+find_package(nn.sdk.common)
+find_package(nn.sdk)
 find_package(cmocka)
 
-target_include_directories(${TARGET} PUBLIC ${NN_COMMON_INCLUDE_DIR}
-                                            ${NN_INCLUDE_DIR})
-target_link_directories(${TARGET} PUBLIC ${NN_LIBRARY})
-target_link_libraries(${TARGET} cmocka ${NN_LIBRARIES})
+target_include_directories(${TARGET} PUBLIC ${NN_SDK_COMMON_INCLUDE_DIR}
+                                            ${NN_SDK_INCLUDE_DIR})
+target_link_directories(${TARGET} PUBLIC ${NN_SDK_LIBRARY})
+target_link_libraries(${TARGET} cmocka ${NN_SDK_LIBRARIES})
 
 #target_include_directories(${TARGET} PUBLIC ${NN_COMMON_INCLUDE_DIR})
 #target_link_directories(${TARGET} PUBLIC ${NN_COMMON_LIBRARY_DIR})

@@ -18,7 +18,7 @@
 #include "nn_defs.h"
 #include "nn_types.h"
 
-#include "nn.common/nn_error.h"
+#include "nn.sdk.common/nn_error.h"
 
 extern DLL_PUBLIC nn_error new_nn_context(nn_host_context *host_context, nn_allocate allocate, nn_deallocate deallocate,
                                           nn_info_callback info, nn_warning_callback warning, nn_error_callback error);

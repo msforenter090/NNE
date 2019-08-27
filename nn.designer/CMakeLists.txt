@@ -43,11 +43,11 @@ include_directories(${SRC_DIR})
 # ------------------------------------------------------------------------------
 # Dependencies.
 # ------------------------------------------------------------------------------
-find_package(nn)
+find_package(nn.sdk)
 find_package(Qt5Widgets CONFIG REQUIRED)
 
-include_directories(${NN_INCLUDE_DIR})
-link_directories(${NN_LIBRARY})
+include_directories(${NN_SDK_INCLUDE_DIR})
+link_directories(${NN_SDK_LIBRARY})
 
 # ------------------------------------------------------------------------------
 # Create target.

@@ -1,7 +1,7 @@
 #include "test_nn_context.h"
 
 #include <stdio.h>
-#include "nn.lib/nn_context.h"
+#include "nn.sdk/nn_context.h"
 #include "test_nn_include.h"
 #include "test_nn_callback.h"
 

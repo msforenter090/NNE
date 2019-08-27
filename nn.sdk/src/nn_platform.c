@@ -1,6 +1,6 @@
 #include "nn_platform.h"
 
-#include "nn.common/nn_util.h"
+#include "nn.sdk.common/nn_util.h"
 #include "nn_runtime.h"
 
 // nn_error nn_platform_count(CONTEXT, short *const count) {

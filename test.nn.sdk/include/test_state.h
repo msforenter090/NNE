@@ -1,7 +1,7 @@
 #ifndef __TEST_STATE_H__
 #define __TEST_STATE_H__
 
-#include "nn.lib/nn_context.h"
+#include "nn.sdk/nn_context.h"
 
 typedef struct {
     nn_host_context context;

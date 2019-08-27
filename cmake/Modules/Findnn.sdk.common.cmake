@@ -8,10 +8,10 @@
 # OpenCL_LIBRARY        - the path to the OpenCL library
 
 # This module defines:
-# NN_COMMON_FOUND, 			- if false, do not try to link.
-# NN_COMMON_INCLUDE_DIR, 	- include directories for nn.common
-# NN_COMMON_LIBRARIES, 		- path to the library
-# NN_COMMON_LIBRARY         - the path to the OpenCL library
+# NN_SDK_COMMON_FOUND,          - if false, do not try to link.
+# NN_SDK_COMMON_INCLUDE_DIR,    - include directories for nn.common
+# NN_SDK_COMMON_LIBRARIES,      - path to the library
+# NN_SDK_COMMON_LIBRARY         - the path to the OpenCL library
 
 SET(SEARCH_PATHS
     /usr/local
@@ -28,7 +28,7 @@ FIND_LIBRARY(NN_COMMON_LIBRARY
     PATHS ${SEARCH_PATHS}
 )
 
-set(NN_COMMON_FOUND, TRUE)
-set(NN_COMMON_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
-set(NN_COMMON_LIBRARIES ${CMAKE_INSTALL_PREFIX})
-set(NN_COMMON_LIBRARY nn.common)
+set(NN_SDK_COMMON_FOUND, TRUE)
+set(NN_SDK_COMMON_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
+set(NN_SDK_COMMON_LIBRARIES ${CMAKE_INSTALL_PREFIX})
+set(NN_SDK_COMMON_LIBRARY nn.sdk.common)

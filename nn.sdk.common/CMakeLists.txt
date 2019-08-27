@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # Constants.
 # ------------------------------------------------------------------------------
-set(TARGET nn.common)
+set(TARGET nn.sdk.common)
 
 # ------------------------------------------------------------------------------
 # Setup.
@@ -39,4 +39,4 @@ set(CMAKE_BUILD_TYPE Debug)
 # Install.
 # ------------------------------------------------------------------------------
 install(TARGETS ${TARGET} DESTINATION ${CMAKE_INSTALL_PREFIX})
-install(FILES ${PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/nn.common)
+install(FILES ${PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/nn.sdk.common)

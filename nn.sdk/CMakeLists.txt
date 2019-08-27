@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # Constants.
 # ------------------------------------------------------------------------------
-set(TARGET nn)
+set(TARGET nn.sdk)
 
 # ------------------------------------------------------------------------------
 # Setup.
@@ -48,10 +48,11 @@ set(CMAKE_BUILD_TYPE Debug)
 # ------------------------------------------------------------------------------
 # Dependencies.
 # ------------------------------------------------------------------------------
-find_package(nn.common)
+find_package(nn.sdk.common)
 find_package(OpenCL)
 
-target_include_directories(${TARGET}    PUBLIC ${NN_COMMON_INCLUDE_DIR}
+message(STATUS "AAAA: " ${NN_SDK_COMMON_INCLUDE_DIR})
+target_include_directories(${TARGET}    PUBLIC  ${NN_SDK_COMMON_INCLUDE_DIR}
                                         PRIVATE ${OpenCL_INCLUDE_DIRS})
 target_link_directories(${TARGET} PRIVATE ${OpenCL_LIBRARY})
 target_link_libraries(${TARGET} LINK_PRIVATE debug ${OpenCL_LIBRARIES})
@@ -60,5 +61,5 @@ target_link_libraries(${TARGET} LINK_PRIVATE debug ${OpenCL_LIBRARIES})
 # Install.
 # ------------------------------------------------------------------------------
 install(TARGETS ${TARGET} DESTINATION ${CMAKE_INSTALL_PREFIX})
-install(FILES ${PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/nn.lib)
+install(FILES ${PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/nn.sdk)
 
