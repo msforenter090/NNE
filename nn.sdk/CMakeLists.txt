@@ -21,6 +21,7 @@ set(PUBLIC_HEADERS      ${PUBLIC_HEADER_DIR}/nn_context.h
 
 set(SRC_FILES           ${SRC_DIR}/nn_constants.h
                         ${SRC_DIR}/nn_context.c
+                        ${SRC_DIR}/nn_kernels.h
                         ${SRC_DIR}/nn_matrix.c
                         ${SRC_DIR}/nn_platform.c
                         ${SRC_DIR}/nn_runtime.c

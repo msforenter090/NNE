@@ -35,7 +35,10 @@ nn_error new_nn_system_context(nn_host_context host_context, nn_system_info syst
     return OK;
 }
 
-nn_error delete_nn_system_context(CONTEXT) { return OK; }
+nn_error delete_nn_system_context(CONTEXT) {
+    host_context->deallocate(system_context);
+    return OK;
+}
 
 nn_error delete_nn_system_info(CONTEXT) {
     host_context->deallocate(system_info);

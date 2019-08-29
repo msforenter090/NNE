@@ -54,7 +54,7 @@ nn_error nn_runtime_devices_info(CONTEXT) {
 nn_error nn_runtime_select_device(CONTEXT) {
     // Use first device.
     // TODO: Changed this. For now use first device, but should usedo dome kind of filtering.
-    memcpy(system_context->device, system_info->devices[0], cl_device_id);
-    memcpy(system_context->device_info, system_info->device_info[0], sizeof(struct _nn_device_info));
+    memcpy(&(system_context->device), system_info->devices, sizeof(cl_device_id));
+    memcpy(&(system_context->device_info), system_info->device_info, sizeof(struct _nn_device_info));
     return OK;
 }

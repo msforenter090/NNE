@@ -40,3 +40,23 @@ void test_new_nn_system_info_create_success(void **state) {
     delete_nn_system_info(context, system_info, NULL);
     delete_nn_context(context, NULL, NULL);
 }
+
+void test_new_nn_system_context_create_success(void **state) {
+    UNUSED(state);
+
+    nn_host_context context = NULL;
+    nn_error error = nn_context_create(&context);
+
+    nn_system_info system_info = NULL;
+    new_nn_system_info(context, &system_info);
+
+    nn_system_context system_context = NULL;
+    error = new_nn_system_context(context, system_info, &system_context);
+
+    ASSERT_OK(error);
+    ASSERT_NOT_NULL(system_context);
+
+    delete_nn_system_context(context, system_info, system_context);
+    delete_nn_system_info(context, system_info, NULL);
+    delete_nn_context(context, NULL, NULL);
+}

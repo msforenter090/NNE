@@ -33,6 +33,7 @@ int main(void) {
     const struct CMUnitTest test_context[] = {
         cmocka_unit_test_setup_teardown(test_new_nn_context_create_success, NULL, NULL),
         cmocka_unit_test_setup_teardown(test_new_nn_system_info_create_success, NULL, NULL),
+        cmocka_unit_test_setup_teardown(test_new_nn_system_context_create_success, NULL, NULL),
         {0}};
 
     // -------------------------------------------------------------------------
