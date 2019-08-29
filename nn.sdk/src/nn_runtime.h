@@ -32,4 +32,8 @@ nn_error nn_runtime_devices(CONTEXT);
 nn_error nn_runtime_devices_info(CONTEXT);
 nn_error nn_runtime_select_device(CONTEXT);
 
+// -----------------------------------------------------------------------------
+// Context.
+// -----------------------------------------------------------------------------
+nn_error nn_runtime_cl_context(CONTEXT);
 #endif // __NN_RUNTIME_H__
