@@ -43,7 +43,6 @@ add_library(${TARGET} SHARED ${SRC_FILES})
 # ------------------------------------------------------------------------------
 include_directories         (include src)
 set_target_properties       (${TARGET} PROPERTIES POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_BUILD_TYPE Debug)
 
 # ------------------------------------------------------------------------------
 # Dependencies.
@@ -51,7 +50,6 @@ set(CMAKE_BUILD_TYPE Debug)
 find_package(nn.sdk.common)
 find_package(OpenCL)
 
-message(STATUS "AAAA: " ${NN_SDK_COMMON_INCLUDE_DIR})
 target_include_directories(${TARGET}    PUBLIC  ${NN_SDK_COMMON_INCLUDE_DIR}
                                         PRIVATE ${OpenCL_INCLUDE_DIRS})
 target_link_directories(${TARGET} PRIVATE ${OpenCL_LIBRARY})

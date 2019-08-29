@@ -54,7 +54,6 @@ link_directories(${NN_SDK_LIBRARY})
 # ------------------------------------------------------------------------------
 add_executable(${TARGET} WIN32 ${SRC_FILES} ${UI_FILES})
 target_link_libraries(${TARGET} Qt5::Widgets)
-#target_link_libraries(${TARGET} -lnn)
 
 # ------------------------------------------------------------------------------
 # Install.

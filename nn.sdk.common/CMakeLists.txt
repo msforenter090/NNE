@@ -33,7 +33,6 @@ add_library(${TARGET} SHARED ${SRC_FILES})
 # Set target properties.
 # ------------------------------------------------------------------------------
 set_target_properties       (${TARGET} PROPERTIES POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_BUILD_TYPE Debug)
 
 # ------------------------------------------------------------------------------
 # Install.

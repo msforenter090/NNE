@@ -29,6 +29,9 @@ nn_error new_nn_system_info(nn_host_context host_context, nn_system_info *system
 
 nn_error new_nn_system_context(nn_host_context host_context, nn_system_info system_info,
                                nn_system_context *system_context) {
+    *system_context = (nn_system_context)host_context->allocate(sizeof(struct _nn_system_context), PTR_SIZE);
+    memset(*system_context, 0, sizeof(struct _nn_system_context));
+    nn_runtime_select_device(host_context, system_info, *system_context);
     return OK;
 }
 

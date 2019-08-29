@@ -30,5 +30,6 @@ nn_error nn_runtime_platforms(CONTEXT);
 // -----------------------------------------------------------------------------
 nn_error nn_runtime_devices(CONTEXT);
 nn_error nn_runtime_devices_info(CONTEXT);
+nn_error nn_runtime_select_device(CONTEXT);
 
 #endif // __NN_RUNTIME_H__

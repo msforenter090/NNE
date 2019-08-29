@@ -43,11 +43,9 @@ struct _nn_system_info {
 };
 
 struct _nn_system_context {
-    // For now only one platform can be used for kernel execution.
-    // nn_runtime_platform platform;
-    // nn_runtime_device *devces;
-    // nn_runtime_device_info *device_info;
-    int a;
+    cl_platform_id platform;
+    cl_device_id device;
+    nn_device_info device_info;
 };
 
 #endif // __NN_TYPES_INTERNAL_H__
