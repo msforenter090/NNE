@@ -63,10 +63,7 @@ nn_error nn_runtime_select_device(CONTEXT) {
 }
 
 nn_error nn_runtime_cl_context(CONTEXT) {
-    cl_context_properties properties[] = {
-		CL_CONTEXT_PLATFORM, (cl_context_properties)system_context->platform,
-		0
-    };
+    cl_context_properties properties[] = {CL_CONTEXT_PLATFORM, (cl_context_properties)system_context->platform, 0};
 
     // Count devices we are using.
     cl_int error;
@@ -87,8 +84,8 @@ nn_error nn_runtime_cl_context(CONTEXT) {
 nn_error nn_runtime_cl_command_queue(CONTEXT) {
     cl_int error;
     cl_command_queue_properties properties;
-    cl_command_queue new_queue = clCreateCommandQueue(system_context->context, system_context->device,
-        CL_QUEUE_PROFILING_ENABLE, &error);
+    cl_command_queue new_queue =
+        clCreateCommandQueue(system_context->context, system_context->device, CL_QUEUE_PROFILING_ENABLE, &error);
     system_context->command_queue = new_queue;
     return OK;
 }
