@@ -3,12 +3,15 @@
 #include <CL/cl.h>
 #include <string.h>
 
-#include "nn.sdk.common/nn_util.h"
 #include "nn_constants.h"
+#include "nn_error_mapper.h"
+#include "nn.sdk.common/nn_util.h"
 
 nn_error nn_runtime_platforms(CONTEXT) {
-    clGetPlatformIDs(MAX_PLATFORMS, system_info->platforms, NULL);
-    return OK;
+    cl_uint error = clGetPlatformIDs(MAX_PLATFORMS, system_info->platforms, NULL);
+    return map_error_code(error, CL_ERROR_MAPPER_GET_PLATFORM_IDS, array_length(CL_ERROR_MAPPER_GET_PLATFORM_IDS));
+
+    // no error handling.
 }
 
 nn_error nn_runtime_devices(CONTEXT) {
