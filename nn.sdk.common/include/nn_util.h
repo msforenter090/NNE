@@ -1,3 +1,17 @@
+// =================================================================================================
+// Project: nn.sdk.common library
+// Common constructs used by nn.sdk and nn.sdk client.
+//
+// File information:
+// Interface for public consumption.
+// Author......... Milan Stanarevic <msforenter090@gmail.com>
+// Changed at..... 2019-08-30
+// License........ MIT license
+// Tab-size....... 4 spaces
+// Line length.... 120 characters
+//
+// =================================================================================================
+
 #ifndef __NN_COMMON_UTIL_H__
 #define __NN_COMMON_UTIL_H__
 

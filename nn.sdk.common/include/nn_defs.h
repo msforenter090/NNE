@@ -1,6 +1,6 @@
 // =================================================================================================
-// Project: nn.common
-// Common constructs used by nn.library and nn.library client.
+// Project: nn.sdk.common library
+// Common constructs used by nn.sdk and nn.sdk client.
 //
 // File information:
 // Interface for public consumption.
@@ -8,7 +8,7 @@
 // Changed at..... 2019-08-23
 // License........ MIT license
 // Tab-size....... 4 spaces
-// Line length.... 100 characters
+// Line length.... 120 characters
 //
 // =================================================================================================
 

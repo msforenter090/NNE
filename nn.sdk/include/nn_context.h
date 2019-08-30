@@ -1,5 +1,5 @@
 // =================================================================================================
-// Project: nn library
+// Project: nn.sdk library
 // Platform info extraction, network training.
 //
 // File information:
@@ -8,7 +8,7 @@
 // Changed at..... 2019-08-23
 // License........ MIT license
 // Tab-size....... 4 spaces
-// Line length.... 100 characters
+// Line length.... 120 characters
 //
 // =================================================================================================
 
