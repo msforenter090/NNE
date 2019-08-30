@@ -6,7 +6,11 @@
 
 // #define simple_kernel void __kernel foo() { return; }
 void simple_kernel(byte *const buffer) {
-    dump_bits(buffer, void __kernel foo() { return; });
+    dump_bits(buffer,
+        void __kernel vector_add(__global float *in, __global float *out) {
+            return; 
+        }
+    );
     return;
 }
 

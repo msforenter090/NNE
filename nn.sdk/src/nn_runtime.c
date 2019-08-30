@@ -1,8 +1,10 @@
 #include "nn_runtime.h"
 
-#include "nn_constants.h"
 #include <CL/cl.h>
 #include <string.h>
+
+#include "nn.sdk.common/nn_util.h"
+#include "nn_constants.h"
 
 nn_error nn_runtime_platforms(CONTEXT) {
     clGetPlatformIDs(MAX_PLATFORMS, system_info->platforms, NULL);
@@ -53,8 +55,40 @@ nn_error nn_runtime_devices_info(CONTEXT) {
 
 nn_error nn_runtime_select_device(CONTEXT) {
     // Use first device.
-    // TODO: Changed this. For now use first device, but should usedo dome kind of filtering.
+    // TODO - TASK-1: Changed this. For now use first device, but should usedo dome kind of filtering.
+    memcpy(&(system_context->platform), system_info->platforms, sizeof(cl_platform_id));
     memcpy(&(system_context->device), system_info->devices, sizeof(cl_device_id));
     memcpy(&(system_context->device_info), system_info->device_info, sizeof(struct _nn_device_info));
+    return OK;
+}
+
+nn_error nn_runtime_cl_context(CONTEXT) {
+    cl_context_properties properties[] = {
+		CL_CONTEXT_PLATFORM, (cl_context_properties)system_context->platform,
+		0
+    };
+
+    // Count devices we are using.
+    cl_int error;
+    unsigned short device_count = 1;
+    cl_device_id *devices = &(system_context->device);
+
+    // TODO - TASK-1: For now we are using just one device to do computation.
+    // In the future we should extend this to multiple devices.
+    // cl_device_id device = system_context->device[device_count];
+    // while(device != NULL) { device = system_context->device[++device_count]; }
+    // device_count = min(device_count, MAX_DEVICES);
+
+    cl_context new_context = clCreateContext(properties, device_count, devices, NULL, NULL, &error);
+    system_context->context = new_context;
+    return OK;
+}
+
+nn_error nn_runtime_cl_command_queue(CONTEXT) {
+    cl_int error;
+    cl_command_queue_properties properties;
+    cl_command_queue new_queue = clCreateCommandQueue(system_context->context, system_context->device,
+        CL_QUEUE_PROFILING_ENABLE, &error);
+    system_context->command_queue = new_queue;
     return OK;
 }

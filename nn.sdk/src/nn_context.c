@@ -32,10 +32,14 @@ nn_error new_nn_system_context(nn_host_context host_context, nn_system_info syst
     *system_context = (nn_system_context)host_context->allocate(sizeof(struct _nn_system_context), PTR_SIZE);
     memset(*system_context, 0, sizeof(struct _nn_system_context));
     nn_runtime_select_device(host_context, system_info, *system_context);
+    nn_runtime_cl_context(host_context, system_info, *system_context);
+    nn_runtime_cl_command_queue(host_context, system_info, *system_context);
     return OK;
 }
 
 nn_error delete_nn_system_context(CONTEXT) {
+    clReleaseCommandQueue(system_context->command_queue);
+    clReleaseContext(system_context->context);
     host_context->deallocate(system_context);
     return OK;
 }

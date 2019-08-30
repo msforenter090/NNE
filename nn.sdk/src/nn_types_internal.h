@@ -36,16 +36,22 @@ struct _nn_device_info {
 // External Objects.
 // -----------------------------------------------------------------------------
 struct _nn_system_info {
-    cl_platform_id platforms[MAX_PLATFORMS_LENGTH];
-    cl_device_id devices[MAX_DEVICES_LENGTH];
-    nn_device_info device_info[MAX_DEVICES_LENGTH];
-    unsigned short device_platform_mapping[MAX_DEVICES_LENGTH];
+    cl_platform_id platforms[MAX_PLATFORMS];
+    cl_device_id devices[MAX_DEVICES];
+    nn_device_info device_info[MAX_DEVICES];
+    unsigned short device_platform_mapping[MAX_DEVICES];
 };
 
 struct _nn_system_context {
     cl_platform_id platform;
+
+    // For now use just one device.
+    // TODO - TASK-1: In the future this should be expanded.
     cl_device_id device;
     nn_device_info device_info;
+
+    cl_context context;
+    cl_command_queue command_queue;
 };
 
 #endif // __NN_TYPES_INTERNAL_H__

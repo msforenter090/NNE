@@ -47,7 +47,7 @@ find_package(cmocka)
 target_include_directories(${TARGET} PUBLIC ${NN_SDK_COMMON_INCLUDE_DIR}
                                             ${NN_SDK_INCLUDE_DIR})
 target_link_directories(${TARGET} PUBLIC ${NN_SDK_LIBRARY})
-target_link_libraries(${TARGET} cmocka ${NN_SDK_LIBRARIES})
+target_link_libraries(${TARGET} cmocka ${NN_SDK_LIBRARIES} -lOpenCL)
 
 #target_include_directories(${TARGET} PUBLIC ${NN_COMMON_INCLUDE_DIR})
 #target_link_directories(${TARGET} PUBLIC ${NN_COMMON_LIBRARY_DIR})
