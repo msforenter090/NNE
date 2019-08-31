@@ -15,13 +15,13 @@ set(SRC_DIR             "src")
 set(PUBLIC_HEADERS      ${PUBLIC_HEADER_DIR}/test_nn_callback.h
                         ${PUBLIC_HEADER_DIR}/test_nn_context.h
                         ${PUBLIC_HEADER_DIR}/test_nn_include.h
-                        ${PUBLIC_HEADER_DIR}/test_nn_platform.h
+                        ${PUBLIC_HEADER_DIR}/test_nn_kernel_execution.h
                         ${PUBLIC_HEADER_DIR}/test_state.h )
 
 set(SRC_FILES           ${SRC_DIR}/test_nn_callback.c
                         ${SRC_DIR}/main.c
                         ${SRC_DIR}/test_nn_context.c
-                        ${SRC_DIR}/test_nn_platform.c )
+                        ${SRC_DIR}/test_nn_kernel_execution.c )
 
 set(CMAKE_SKIP_RPATH, TRUE)
 

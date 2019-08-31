@@ -28,7 +28,7 @@
 #define F_ELEMENT float
 
 typedef struct _nn_f_matrix {
-    float *ptr;
+    F_ELEMENT *ptr;
 } nn_f_matrix;
 
 typedef struct _nn_f_matrix_meta {
@@ -43,7 +43,7 @@ typedef struct _nn_f_matrix_meta {
 // -------------------------------------
 // Matrix related.
 // -------------------------------------
-extern DLL_PUBLIC void new_nn_f_matrix(CONTEXT, const nn_f_matrix_meta *const meta, nn_f_matrix *const matrix);
+extern DLL_PUBLIC void new_nn_fmatrix(CONTEXT, const nn_f_matrix_meta *const meta, nn_f_matrix *const matrix);
 extern DLL_PUBLIC void destroy_nn_matrix(CONTEXT, nn_f_matrix *const matrix);
 
 #endif // __NN_MATRIX_H__

@@ -1,38 +1,26 @@
 #include "nn_platform.h"
 
-#include "nn.sdk.common/nn_util.h"
-#include "nn_runtime.h"
+#include <string.h>
 
-// nn_error nn_platform_count(CONTEXT, short *const count) {
-//     return nn_runtime_platform_count(context, count);
-// }
-//
-// nn_error nn_platforms(CONTEXT, nn_platform *platforms, const unsigned short
-// length) {
-//     short platform_count = 0;
-//     nn_runtime_platform_count(context, &platform_count);
-//     short count = min(length, platform_count);
-//
-//     //
-//     return OK;
-// }
-//
-// nn_error nn_platform_info(CONTEXT, nn_platform platform, byte *values[]) {
-//     return OK;
-// }
-//
-// nn_error nn_platform_device_count(CONTEXT, nn_platform platform,
-//                                   short *const count) {
-//     return OK;
-// }
-//
-// nn_error nn_platform_devices(CONTEXT, nn_platform platform,
-//                              nn_device *devices[]) {
-//     return OK;
-// }
-//
-// nn_error nn_platform_setup(CONTEXT) {
-//     nn_tuple_platform_devices *map = NULL;
-//     nn_runtime_platform_devices_map(context, &map);
-//     return OK;
-// }
+#include "nn_kernels.h"
+#include "nn_types_internal.h"
+
+nn_error nn_execute_kernel(CONTEXT) {
+    byte *kernel_source = host_context->allocate(1024, PTR_SIZE);
+    memset(kernel_source, 0, 1024);
+    const char *code[]={kernel_source};
+    simple_kernel(kernel_source);
+    cl_uint error;
+    cl_program program = clCreateProgramWithSource(system_context->context, 1, code, NULL, &error);
+    error = clBuildProgram(program, 0, NULL, "", NULL, NULL);
+    cl_kernel kernel = clCreateKernel(program, "vector_add", &error);
+    size_t global;
+    size_t local;  
+    error = clGetKernelWorkGroupInfo(kernel, system_context->device, CL_KERNEL_WORK_GROUP_SIZE, sizeof(local), &local, NULL);
+    global = local;
+    error = clEnqueueNDRangeKernel(system_context->command_queue, kernel, 1, NULL, &global, &local, 0, NULL, NULL);
+    clFinish(system_context->command_queue);
+    clReleaseKernel(kernel);
+    clReleaseProgram(program);
+    return OK;
+}

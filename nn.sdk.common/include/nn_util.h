@@ -15,6 +15,8 @@
 #ifndef __NN_COMMON_UTIL_H__
 #define __NN_COMMON_UTIL_H__
 
+#include <stdio.h>
+
 #ifndef max
 #define max(a,b) \
        ({ __typeof__ (a) _a = (a); \
