@@ -17,8 +17,9 @@
 
 #include "nn_defs.h"
 #include "nn_types.h"
+#include "nn_matrix.h"
 #include "nn.sdk.common/nn_error.h"
 
-extern DLL_PUBLIC nn_error nn_execute_kernel(CONTEXT);
+extern DLL_PUBLIC nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net);
 
 #endif // __PLATFORM_H__

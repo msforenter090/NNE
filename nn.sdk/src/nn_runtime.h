@@ -16,7 +16,6 @@
 
 #include "nn_defs.h"
 #include "nn_types.h"
-#include "nn_kernels.h"
 #include "nn_types_internal.h"
 
 #include "nn.sdk.common/nn_error.h"

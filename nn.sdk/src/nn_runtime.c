@@ -143,9 +143,11 @@ nn_error nn_runtime_cl_kernels_info(CONTEXT, nn_kernel_source const* const sourc
     cl_kernel cl_kernel = kernel->kernels[count];
     while(cl_kernel != NULL) {
         nn_kernel_info *info = &(kernel->info[count]);
+        // clang-format off
         cl_error = clGetKernelWorkGroupInfo(cl_kernel, NULL, CL_KERNEL_WORK_GROUP_SIZE, sizeof(info->kernel_work_group_size), &(info->kernel_work_group_size), NULL);
         cl_error = clGetKernelWorkGroupInfo(cl_kernel, NULL, CL_KERNEL_COMPILE_WORK_GROUP_SIZE, sizeof(info->kernel_compile_work_group_size), &(info->kernel_compile_work_group_size), NULL);
         cl_error = clGetKernelWorkGroupInfo(cl_kernel, NULL, CL_KERNEL_LOCAL_MEM_SIZE, sizeof(info->kernel_local_mem_size), &(info->kernel_local_mem_size), NULL);
+        // clang-format on
         count++;
         cl_kernel = kernel->kernels[count];
     }
