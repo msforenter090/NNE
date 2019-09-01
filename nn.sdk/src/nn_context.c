@@ -1,7 +1,7 @@
 #include "nn_context.h"
 
-#include "nn_runtime.h"
 #include <string.h>
+#include "nn_runtime.h"
 
 nn_error new_nn_context(nn_host_context *host_context, nn_allocate allocate, nn_deallocate deallocate,
                         nn_info_callback info, nn_warning_callback warning, nn_error_callback error) {

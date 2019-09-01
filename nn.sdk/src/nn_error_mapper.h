@@ -15,10 +15,7 @@
 #ifndef __NN_ERROR_MAPPER_H__
 #define __NN_ERROR_MAPPER_H__
 
-// TODO - TASK-2: Do it differently.
-#define CL_TARGET_OPENCL_VERSION 120
-
-#include <CL/cl.h>
+#include "nn_cl_include.h"
 #include "nn.sdk.common/nn_error.h"
 
 typedef struct _nn_tuple {

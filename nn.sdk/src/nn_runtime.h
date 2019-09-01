@@ -16,6 +16,7 @@
 
 #include "nn_defs.h"
 #include "nn_types.h"
+#include "nn_kernels.h"
 #include "nn_types_internal.h"
 
 #include "nn.sdk.common/nn_error.h"
@@ -33,9 +34,12 @@ nn_error nn_runtime_devices_info(CONTEXT);
 nn_error nn_runtime_select_device(CONTEXT);
 
 // -----------------------------------------------------------------------------
-// Context.
+// OpenCL constructs.
 // -----------------------------------------------------------------------------
 nn_error nn_runtime_cl_context(CONTEXT);
 nn_error nn_runtime_cl_command_queue(CONTEXT);
+nn_error nn_runtime_cl_program_from_source(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel);
+nn_error nn_runtime_cl_build_program(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel);
+nn_error nn_runtime_cl_kernels_from_program(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel);
 
 #endif // __NN_RUNTIME_H__

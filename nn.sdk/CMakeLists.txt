@@ -23,6 +23,7 @@ set(SRC_FILES           ${SRC_DIR}/nn_constants.h
                         ${SRC_DIR}/nn_context.c
                         ${SRC_DIR}/nn_error_mapper.c
                         ${SRC_DIR}/nn_error_mapper.h
+                        ${SRC_DIR}/nn_kernels.c
                         ${SRC_DIR}/nn_kernels.h
                         ${SRC_DIR}/nn_matrix.c
                         ${SRC_DIR}/nn_platform.c

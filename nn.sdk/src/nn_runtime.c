@@ -1,9 +1,9 @@
 #include "nn_runtime.h"
 
-#include <CL/cl.h>
 #include <string.h>
 
 #include "nn_constants.h"
+#include "nn_cl_include.h"
 #include "nn_error_mapper.h"
 #include "nn.sdk.common/nn_util.h"
 
@@ -90,5 +90,29 @@ nn_error nn_runtime_cl_command_queue(CONTEXT) {
     cl_command_queue new_queue =
         clCreateCommandQueue(system_context->context, system_context->device, CL_QUEUE_PROFILING_ENABLE, &error);
     system_context->command_queue = new_queue;
+    return OK;
+}
+
+nn_error nn_runtime_cl_program_from_source(CONTEXT, nn_kernel_source const * const source, nn_kernel *const kernel) {
+    cl_uint error;
+    kernel->program = clCreateProgramWithSource(system_context->context, source->kernel_sources_length,
+                                                source->kernel_sources, NULL, &error);
+    return OK;
+}
+
+nn_error nn_runtime_cl_build_program(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel) {
+    cl_int error = clBuildProgram(kernel->program, 0, NULL, NULL, NULL, NULL);
+    return OK;
+}
+
+nn_error nn_runtime_cl_kernels_from_program(CONTEXT, nn_kernel_source const * const source, nn_kernel *const kernel) {
+    cl_uint error;
+    cl_uint count = 0;
+    const byte *kernel_name = source->kernel_names[count];
+    while(kernel_name != NULL) {
+        kernel->kernels[count] = clCreateKernel(kernel->program, kernel_name, &error);
+        count++;
+        kernel_name = source->kernel_names[count];
+    }
     return OK;
 }

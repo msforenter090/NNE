@@ -16,7 +16,7 @@
 #define __NN_TYPES_INTERNAL_H__
 
 #include "nn_constants.h"
-#include <CL/cl.h>
+#include "nn_cl_include.h"
 
 // -----------------------------------------------------------------------------
 // Mapping for internal usage.
