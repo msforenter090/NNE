@@ -1,17 +1,20 @@
 #include "nn_runtime.h"
 
-#include <string.h>
-
+#include "nn_util.h"
 #include "nn_constants.h"
 #include "nn_cl_include.h"
 #include "nn_error_mapper.h"
 #include "nn.sdk.common/nn_util.h"
 
 nn_error nn_runtime_platforms(CONTEXT) {
-    cl_uint error = clGetPlatformIDs(MAX_PLATFORMS, system_info->platforms, NULL);
-    return map_error_code(error, CL_ERROR_MAPPER_GET_PLATFORM_IDS, array_length(CL_ERROR_MAPPER_GET_PLATFORM_IDS));
+    cl_uint cl_error = clGetPlatformIDs(MAX_PLATFORMS, system_info->platforms, NULL);
+    nn_error error = map_error_code(cl_error, CL_ERROR_MAPPER_GET_PLATFORM_IDS, array_length(CL_ERROR_MAPPER_GET_PLATFORM_IDS));
+    NN_LOG(host_context, error);
+    NN_JUMP(error, get_platform_ids_cleanup);
+    return error;
 
-    // no error handling.
+get_platform_ids_cleanup:
+    return error;
 }
 
 nn_error nn_runtime_devices(CONTEXT) {

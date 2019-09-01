@@ -9,7 +9,7 @@ nn_error nn_execute_kernel(CONTEXT) {
     cl_uint counter;
     nn_kernel kernel;
     nn_kernel_source sources;
-
+ 
     simple_kernel_sources(&sources);
     nn_runtime_cl_program_from_source(host_context, system_info, system_context, &sources, &kernel);
     nn_runtime_cl_build_program(host_context, system_info, system_context, &sources, &kernel);
@@ -22,16 +22,16 @@ nn_error nn_execute_kernel(CONTEXT) {
     // global = local;
 // 
     // error = clEnqueueNDRangeKernel(system_context->command_queue, kernel, 1, NULL, &global, &local, 0, NULL, NULL);
-    // clFinish(system_context->command_queue);
+    // clFinish(system_context->command_queue); 
 // 
     // clReleaseKernel(kernel);
 
     counter = 0;
-    cl_kernel kernel = kernel.kernels[counter];
-    while(kernel != NULL) {
-        clReleaseKernel(kernel);
+    cl_kernel cl_kernel = kernel.kernels[counter];
+    while(cl_kernel != NULL) {
+        clReleaseKernel(cl_kernel);
         counter++;
-        kernel = kernel.kernels[counter];
+        cl_kernel = kernel.kernels[counter];
     }
     clReleaseProgram(kernel.program);
     return OK;

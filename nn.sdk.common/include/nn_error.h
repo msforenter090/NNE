@@ -38,10 +38,7 @@ typedef struct _nn_error {
 // -----------------------------------------------------------------------------
 // Errors.
 // -----------------------------------------------------------------------------
-static const nn_error OK = {.code = CODE_OK};
-static const nn_error FAIL = {.code = CODE_FAIL};
-static const nn_error UNKNOWN = {.code = CODE_UNKNOWN};
-static const nn_error INVALID_PARAM = {.code = CODE_INVALID_PARAM};
-static const nn_error NO_MEMORY = {.code = CODE_NO_MEMORY};
+static const nn_error OK = {.code = CODE_OK, .message = "Ok.\0"};
+static const nn_error FAIL = {.code = CODE_FAIL, .message = "Fail.\0"};
 
 #endif // __NN_ERROR_H__

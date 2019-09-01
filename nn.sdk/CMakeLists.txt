@@ -30,6 +30,7 @@ set(SRC_FILES           ${SRC_DIR}/nn_constants.h
                         ${SRC_DIR}/nn_runtime.c
                         ${SRC_DIR}/nn_runtime.h
                         ${SRC_DIR}/nn_types_internal.h
+                        ${SRC_DIR}/nn_util.h
                         )
 
 set(CMAKE_SKIP_RPATH, TRUE)
