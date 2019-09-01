@@ -40,6 +40,4 @@
 #define dump_bits(...) #__VA_ARGS__
 #endif // dump_bits
 
-#define array_length(x)  (sizeof(x) / sizeof((x)[0]))
-
 #endif // __NN_COMMON_UTIL_H__
