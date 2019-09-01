@@ -2,11 +2,11 @@
 
 #include "nn.sdk.common/nn_util.h"
 
-const byte **simple_kernel_names_list = (const char *[]) {
+const char **simple_kernel_names_list = (const char *[]) {
     "vector_add", NULL
 };
 
-const byte **simple_kernel_sources_list = (const char *[]) {
+const char **simple_kernel_sources_list = (const char *[]) {
     dump_bits(void __kernel vector_add() {
         return;
     }), NULL

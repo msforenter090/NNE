@@ -14,6 +14,7 @@ nn_error nn_execute_kernel(CONTEXT) {
     nn_runtime_cl_program_from_source(host_context, system_info, system_context, &sources, &kernel);
     nn_runtime_cl_build_program(host_context, system_info, system_context, &sources, &kernel);
     nn_runtime_cl_kernels_from_program(host_context, system_info, system_context, &sources, &kernel);
+    nn_runtime_cl_kernels_info(host_context, system_info, system_context, &sources, &kernel);
 
 // 
     // size_t global;

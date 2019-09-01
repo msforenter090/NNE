@@ -41,5 +41,6 @@ nn_error nn_runtime_cl_command_queue(CONTEXT);
 nn_error nn_runtime_cl_program_from_source(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel);
 nn_error nn_runtime_cl_build_program(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel);
 nn_error nn_runtime_cl_kernels_from_program(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel);
+nn_error nn_runtime_cl_kernels_info(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel);
 
 #endif // __NN_RUNTIME_H__

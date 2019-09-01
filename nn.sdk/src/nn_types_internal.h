@@ -47,6 +47,28 @@ struct _nn_device_info {
 };
 
 // -----------------------------------------------------------------------------
+// Kernel construction.
+// -----------------------------------------------------------------------------
+typedef struct _nn_kernel_source {
+    const char **kernel_names;
+    const char **kernel_sources;
+    unsigned short kernel_names_length;
+    unsigned short kernel_sources_length;
+} nn_kernel_source;
+
+typedef struct _nn_kernel_info {
+    size_t kernel_work_group_size;
+    size_t kernel_compile_work_group_size[3];
+    cl_ulong kernel_local_mem_size;
+} nn_kernel_info;
+
+typedef struct _nn_kernel {
+    cl_program program;
+    cl_kernel kernels[MAX_KERNELS_PER_EXECUTION];
+    nn_kernel_info info[MAX_KERNELS_PER_EXECUTION];
+} nn_kernel;
+
+// -----------------------------------------------------------------------------
 // External Objects.
 // -----------------------------------------------------------------------------
 struct _nn_system_info {
