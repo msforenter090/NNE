@@ -7,9 +7,9 @@ const char **simple_kernel_names_list = (const char *[]) {
 };
 
 const char **simple_kernel_sources_list = (const char *[]) {
-    dump_bits(void __kernel vector_add(__global float* in, __global float* out, __global float* multiply) {
+    dump_bits(__kernel void vector_add(__global float* in, __global float* out, __global float* multiply) {
         int index = get_global_id(0);
-        out[inex] = in[index] * multiply[index];
+        out[index] = in[index] * multiply[index];
         return;
     }), NULL
 };

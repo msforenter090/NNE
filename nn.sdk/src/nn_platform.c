@@ -1,5 +1,6 @@
 #include "nn_platform.h"
 
+#include <stdio.h>
 #include "nn_kernels.h"
 #include "nn_runtime.h"
 
@@ -34,13 +35,15 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net,
     cl_mem cl_output_buffer = clCreateBuffer(system_context->context, CL_MEM_WRITE_ONLY | CL_MEM_USE_HOST_PTR, output_size_in_bytes, output, &cl_error);
     cl_mem cl_layers_buffer = clCreateBuffer(system_context->context, CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, layers_size_in_bytes, net->layers, &cl_error);
 
-    clSetKernelArg(kernel.kernels[VECTOR_ADD], 0, input_size_in_bytes, cl_input_buffer);
-    clSetKernelArg(kernel.kernels[VECTOR_ADD], 1, output_size_in_bytes, cl_output_buffer);
-    clSetKernelArg(kernel.kernels[VECTOR_ADD], 2, layers_size_in_bytes, cl_layers_buffer);
+    cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 0, sizeof(cl_mem), &cl_input_buffer);
+    cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 1, sizeof(cl_mem), &cl_output_buffer);
+    cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 2, sizeof(cl_mem), &cl_layers_buffer);
 
     size_t global = 1024;
     size_t local = 1024;
     cl_error = clEnqueueNDRangeKernel(system_context->command_queue, kernel.kernels[VECTOR_ADD], 1, NULL, &global, &local, 0, NULL, NULL);
+
+    cl_error = clEnqueueReadBuffer(system_context->command_queue, cl_output_buffer, CL_TRUE, 0, output_size_in_bytes, output, 0, 0, NULL);
     clFlush(system_context->command_queue);
 
     clReleaseMemObject(cl_layers_buffer);
@@ -55,5 +58,6 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net,
         cl_kernel = kernel.kernels[counter];
     }
     clReleaseProgram(kernel.program);
+    printf("aaa");
     return OK;
 }
