@@ -13,7 +13,7 @@ nn_error nn_runtime_platforms(CONTEXT) {
     return error;
 
 cleanup_label(clGetPlatformIDs):
-    return OK;
+    return error;
 }
 
 nn_error nn_runtime_devices(CONTEXT) {
@@ -41,7 +41,7 @@ nn_error nn_runtime_devices(CONTEXT) {
         }
         total_devices += devices_per_platform;
     }
-    return OK;
+    return error;
 
 cleanup_label(clGetDeviceIDsLength):
 cleanup_label(clGetDeviceIDs):
@@ -82,7 +82,6 @@ nn_error nn_runtime_select_device(CONTEXT) {
     memcpy(&(system_context->platform), system_info->platforms, sizeof(cl_platform_id));
     memcpy(&(system_context->device), system_info->devices, sizeof(cl_device_id));
     memcpy(&(system_context->device_info), system_info->device_info, sizeof(struct _nn_device_info));
-    return OK;
 }
 
 nn_error nn_runtime_cl_context(CONTEXT) {
@@ -126,27 +125,51 @@ cleanup_label(clCreateCommandQueue):
 }
 
 nn_error nn_runtime_cl_program_from_source(CONTEXT, nn_kernel_source const * const source, nn_kernel *const kernel) {
-    cl_uint error;
+    cl_uint cl_error;
     kernel->program = clCreateProgramWithSource(system_context->context, source->kernel_sources_length,
-                                                source->kernel_sources, NULL, &error);
-    return OK;
+                                                source->kernel_sources, NULL, &cl_error);
+    nn_error error = map_error_code(cl_error, CL_ERROR_MAPPER_CREATE_PROGRAM_WITH_SOURCE, CL_ERROR_MAPPER_CREATE_PROGRAM_WITH_SOURCE_LENGTH);
+    check_nn_error_log(host_context, error);
+    check_nn_error_jump(error, cleanup_label(clCreateProgramWithSource));
+    return error;
+
+cleanup_label(clCreateProgramWithSource):
+    kernel->program = NULL;
+    return error;
 }
 
 nn_error nn_runtime_cl_build_program(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel) {
-    cl_int error = clBuildProgram(kernel->program, 0, NULL, NULL, NULL, NULL);
-    return OK;
+    cl_int cl_error = clBuildProgram(kernel->program, 0, NULL, NULL, NULL, NULL);
+    nn_error error = map_error_code(cl_error, CL_ERROR_MAPPER_BUILD_PROGRAM, CL_ERROR_MAPPER_BUILD_PROGRAM_LENGTH);
+    check_nn_error_log(host_context, error);
+    check_nn_error_jump(error, cleanup_label(clBuildProgram));
+    return error;
+
+cleanup_label(clBuildProgram):
+    kernel->program = NULL;
+    // TODO: Get & Print program log.
+    // clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_LOG, sizeof(buffer), buffer, &len);
+    return error;
 }
 
 nn_error nn_runtime_cl_kernels_from_program(CONTEXT, nn_kernel_source const * const source, nn_kernel *const kernel) {
-    cl_uint error;
+    cl_int cl_error;
+    nn_error error;
     cl_uint count = 0;
     const byte *kernel_name = source->kernel_names[count];
     while(kernel_name != NULL) {
-        kernel->kernels[count] = clCreateKernel(kernel->program, kernel_name, &error);
+        kernel->kernels[count] = clCreateKernel(kernel->program, kernel_name, &cl_error);
+        error = map_error_code(cl_error, CL_ERROR_MAPPER_CREATE_KERNEL, CL_ERROR_MAPPER_CREATE_KERNEL_LENGTH);
+        check_nn_error_log(host_context, error);
+        check_nn_error_jump(error, cleanup_label(clCreateKernel));
         count++;
         kernel_name = source->kernel_names[count];
     }
-    return OK;
+    return error;
+
+cleanup_label(clCreateKernel):
+    memset(kernel->kernels, 0, MAX_KERNELS_PER_EXECUTION * sizeof(cl_kernel));
+    return error;
 }
 
 nn_error nn_runtime_cl_kernels_info(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel) {

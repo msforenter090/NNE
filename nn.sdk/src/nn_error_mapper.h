@@ -35,6 +35,15 @@ extern const unsigned short CL_ERROR_MAPPER_CREATE_CONTEXT_LENGTH;
 extern const nn_tuple CL_ERROR_MAPPER_CREATE_COMMAND_QUEUE[];
 extern const unsigned short CL_ERROR_MAPPER_CREATE_COMMAND_QUEUE_LENGTH;
 
+extern const nn_tuple CL_ERROR_MAPPER_CREATE_PROGRAM_WITH_SOURCE[];
+extern const unsigned short CL_ERROR_MAPPER_CREATE_PROGRAM_WITH_SOURCE_LENGTH;
+
+extern const nn_tuple CL_ERROR_MAPPER_BUILD_PROGRAM[];
+extern const unsigned short CL_ERROR_MAPPER_BUILD_PROGRAM_LENGTH;
+
+extern const nn_tuple CL_ERROR_MAPPER_CREATE_KERNEL[];
+extern const unsigned short CL_ERROR_MAPPER_CREATE_KERNEL_LENGTH;
+
 nn_error map_error_code(cl_uint error_code, nn_tuple const * const mapping, const unsigned short length);
 
 #endif // __NN_ERROR_MAPPER_H__
