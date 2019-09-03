@@ -29,6 +29,12 @@ extern const unsigned short CL_ERROR_MAPPER_GET_PLATFORM_IDS_LENGTH;
 extern const nn_tuple CL_ERROR_MAPPER_GET_DEVICE_IDS[];
 extern const unsigned short CL_ERROR_MAPPER_GET_DEVICE_IDS_LENGTH;
 
+extern const nn_tuple CL_ERROR_MAPPER_CREATE_CONTEXT[];
+extern const unsigned short CL_ERROR_MAPPER_CREATE_CONTEXT_LENGTH;
+
+extern const nn_tuple CL_ERROR_MAPPER_CREATE_COMMAND_QUEUE[];
+extern const unsigned short CL_ERROR_MAPPER_CREATE_COMMAND_QUEUE_LENGTH;
+
 nn_error map_error_code(cl_uint error_code, nn_tuple const * const mapping, const unsigned short length);
 
 #endif // __NN_ERROR_MAPPER_H__

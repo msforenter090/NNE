@@ -89,7 +89,7 @@ nn_error nn_runtime_cl_context(CONTEXT) {
     cl_context_properties properties[] = {CL_CONTEXT_PLATFORM, (cl_context_properties)system_context->platform, 0};
 
     // Count devices we are using.
-    cl_int error;
+    cl_int cl_error;
     unsigned short device_count = 1;
     cl_device_id *devices = &(system_context->device);
 
@@ -99,18 +99,30 @@ nn_error nn_runtime_cl_context(CONTEXT) {
     // while(device != NULL) { device = system_context->device[++device_count]; }
     // device_count = min(device_count, MAX_DEVICES);
 
-    cl_context new_context = clCreateContext(properties, device_count, devices, NULL, NULL, &error);
+    cl_context new_context = clCreateContext(properties, device_count, devices, NULL, NULL, &cl_error);
+    nn_error error = map_error_code(cl_error, CL_ERROR_MAPPER_CREATE_CONTEXT, CL_ERROR_MAPPER_CREATE_CONTEXT_LENGTH);
+    check_nn_error_log(host_context, error);
+    check_nn_error_jump(error, cleanup_label(clCreateContext));
     system_context->context = new_context;
-    return OK;
+    return error;
+
+cleanup_label(clCreateContext):
+    return error;
 }
 
 nn_error nn_runtime_cl_command_queue(CONTEXT) {
-    cl_int error;
+    cl_int cl_error;
     cl_command_queue_properties properties;
     cl_command_queue new_queue =
-        clCreateCommandQueue(system_context->context, system_context->device, CL_QUEUE_PROFILING_ENABLE, &error);
+        clCreateCommandQueue(system_context->context, system_context->device, CL_QUEUE_PROFILING_ENABLE, &cl_error);
+    nn_error error = map_error_code(cl_error, CL_ERROR_MAPPER_CREATE_COMMAND_QUEUE, CL_ERROR_MAPPER_CREATE_COMMAND_QUEUE_LENGTH);
+    check_nn_error_log(host_context, error);
+    check_nn_error_jump(error, cleanup_label(clCreateCommandQueue));
     system_context->command_queue = new_queue;
-    return OK;
+    return error;
+
+cleanup_label(clCreateCommandQueue):
+    return error;
 }
 
 nn_error nn_runtime_cl_program_from_source(CONTEXT, nn_kernel_source const * const source, nn_kernel *const kernel) {

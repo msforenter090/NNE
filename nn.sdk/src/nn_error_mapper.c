@@ -19,6 +19,28 @@ const nn_tuple CL_ERROR_MAPPER_GET_DEVICE_IDS[] = {
 };
 const unsigned short CL_ERROR_MAPPER_GET_DEVICE_IDS_LENGTH = array_length(CL_ERROR_MAPPER_GET_DEVICE_IDS);
 
+const nn_tuple CL_ERROR_MAPPER_CREATE_CONTEXT[] = {
+    {.key = CL_INVALID_PLATFORM, .error = {.code = CODE_OK, .message = "clCreateContext() fail(CL_INVALID_PLATFORM).\0"}},
+    {.key = CL_INVALID_VALUE, .error = {.code = CODE_OK, .message = "clCreateContext() fail(CL_INVALID_VALUE).\0"}},
+    {.key = CL_INVALID_DEVICE, .error = {.code = CODE_OK, .message = "clCreateContext() fail(CL_INVALID_DEVICE).\0"}},
+    {.key = CL_DEVICE_NOT_AVAILABLE, .error = {.code = CODE_OK, .message = "clCreateContext() fail(CL_DEVICE_NOT_AVAILABLE).\0"}},
+    {.key = CL_OUT_OF_HOST_MEMORY, .error = {.code = CODE_OK, .message = "clCreateContext() fail(CL_OUT_OF_HOST_MEMORY).\0"}},
+    {.key = CL_SUCCESS, .error = {.code = CODE_OK, .message = "clCreateContext() success(CL_SUCCESS).\0"}},
+    {0}
+};
+const unsigned short CL_ERROR_MAPPER_CREATE_CONTEXT_LENGTH = array_length(CL_ERROR_MAPPER_CREATE_CONTEXT);
+
+const nn_tuple CL_ERROR_MAPPER_CREATE_COMMAND_QUEUE[] = {
+    {.key = CL_INVALID_CONTEXT, .error = {.code = CODE_OK, .message = "clCreateCommandQueue() fail(CL_INVALID_CONTEXT).\0"}},
+    {.key = CL_INVALID_DEVICE, .error = {.code = CODE_OK, .message = "clCreateCommandQueue() fail(CL_INVALID_DEVICE).\0"}},
+    {.key = CL_INVALID_VALUE, .error = {.code = CODE_OK, .message = "clCreateCommandQueue() fail(CL_INVALID_VALUE).\0"}},
+    {.key = CL_INVALID_QUEUE_PROPERTIES, .error = {.code = CODE_OK, .message = "clCreateCommandQueue() fail(CL_INVALID_QUEUE_PROPERTIES).\0"}},
+    {.key = CL_OUT_OF_HOST_MEMORY, .error = {.code = CODE_OK, .message = "clCreateCommandQueue() fail(CL_OUT_OF_HOST_MEMORY).\0"}},
+    {.key = CL_SUCCESS, .error = {.code = CODE_OK, .message = "clCreateCommandQueue() success(CL_SUCCESS).\0"}},
+    {0}
+};
+const unsigned short CL_ERROR_MAPPER_CREATE_COMMAND_QUEUE_LENGTH = array_length(CL_ERROR_MAPPER_CREATE_COMMAND_QUEUE);
+
 nn_error map_error_code(cl_uint error_code, nn_tuple const * const mapping, const unsigned short length) {
     for(unsigned short i = 0; i < length; i++) {
         if(error_code == mapping[i].key) { return mapping[i].error; }
