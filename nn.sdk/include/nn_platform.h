@@ -20,8 +20,7 @@
 #include "nn_matrix.h"
 #include "nn.sdk.common/nn_error.h"
 
-extern DLL_PUBLIC nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, 
-                            ELEMENT_TYPE *input, unsigned int input_length,
-                            ELEMENT_TYPE *output, unsigned int output_length);
+extern DLL_PUBLIC nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net,
+                                            ELEMENT_TYPE *input, ELEMENT_TYPE *output);
 
 #endif // __PLATFORM_H__

@@ -4,10 +4,23 @@
 #include "nn_kernels.h"
 #include "nn_runtime.h"
 
+static void network_info(unsigned int * const fan_in, unsigned int * const fan_out, unsigned int * const bias_length,
+                        unsigned int * const longest_layer, unsigned int const * const layer_meta,
+                        unsigned int layer_meta_length) {
+    *fan_in = layer_meta[0];
+    *fan_out = layer_meta[layer_meta_length - 1];
+    *bias_length = 0;
+    for(unsigned int i = 1; i < layer_meta_length; i++) {
+        *bias_length += layer_meta[i];
+    }
+}
+
 // input_length & output_length is number of ELEMENT_TYPES
-nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, 
-                            ELEMENT_TYPE *input, unsigned int input_length,
-                            ELEMENT_TYPE *output, unsigned int output_length) {
+nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYPE *input, ELEMENT_TYPE *output) {
+
+    unsigned int fan_in, fan_out, bias_length, longest_layer;
+    network_info(&fan_in, &fan_out, &bias_length, &longest_layer, net->layer_meta, net->layer_meta_length);
+    
     cl_int cl_error;
     cl_uint counter;
     nn_kernel kernel;

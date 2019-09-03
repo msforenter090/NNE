@@ -34,12 +34,10 @@ typedef struct _nn_f_matrix_meta {
 } nn_fmatrix_meta;
 
 typedef struct _nn_neural_net {
-    ELEMENT_TYPE *layers;
     ELEMENT_TYPE *biases;
+    ELEMENT_TYPE *synapses;
     unsigned int *layer_meta;
-    unsigned int layers_count;
-    unsigned int fan_in;
-    unsigned int fan_out;
+    unsigned int layer_meta_length;
 } nn_neural_net;
 
 // -----------------------------------------------------------------------------
