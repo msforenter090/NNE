@@ -9,8 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     // Move to styles.
-    setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size(),
-                                    qApp->desktop()->availableGeometry()));
+    /*setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size(),
+                                    qApp->desktop()->availableGeometry()));*/
     ui->statusBar->showMessage("Hello from status bar!");
 }
 

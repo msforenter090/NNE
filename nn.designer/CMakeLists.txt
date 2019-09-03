@@ -1,5 +1,6 @@
 #set(MIN_CMAKE_VERSION 3.10)
 set(TARGET nn.designer)
+set(MIN_CMAKE_VERSION 3.10)
 
 cmake_minimum_required(VERSION ${MIN_CMAKE_VERSION})
 project(${TARGET} LANGUAGES CXX)
@@ -11,11 +12,12 @@ set(SRC_DIR             "src")
 set(UI_DIR              "ui")
 
 set(HEADER_FILES        ${HEADER_DIR}/gui/mainwindow.h)
-set(SRC_FILES           ${SRC_DIR}/gui/mainwindow.cpp
-                        ${SRC_DIR}/ostream.h ${SRC_DIR}/ostream.cpp
-                        ${SRC_DIR}/history.h ${SRC_DIR}/history.cpp
-                        ${SRC_DIR}/project.h ${SRC_DIR}/project.cpp
-                        ${SRC_DIR}/main.cpp)
+set(SRC_FILES           ${SRC_DIR}/main.cpp
+                        ${SRC_DIR}/gui/mainwindow.cpp
+                        ${SRC_DIR}/Project.h ${SRC_DIR}/Project.cpp
+                        ${SRC_DIR}/NeuralNetwork.h ${SRC_DIR}/NeuralNetwork.cpp
+                        ${SRC_DIR}/Workspace.h ${SRC_DIR}/Workspace.cpp
+                        )
 set(UI_FILES            ${UI_DIR}/mainwindow.ui)
 
 set(FILES ${SRC_FILES})
@@ -43,11 +45,11 @@ include_directories(${SRC_DIR})
 # ------------------------------------------------------------------------------
 # Dependencies.
 # ------------------------------------------------------------------------------
-find_package(nn)
+#find_package(nn)
 find_package(Qt5Widgets CONFIG REQUIRED)
 
-include_directories(${NN_INCLUDE_DIR})
-link_directories(${NN_LIBRARY})
+#include_directories(${NN_INCLUDE_DIR})
+#link_directories(${NN_LIBRARY})
 
 # ------------------------------------------------------------------------------
 # Create target.
