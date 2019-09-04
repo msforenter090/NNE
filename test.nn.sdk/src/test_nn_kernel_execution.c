@@ -7,25 +7,22 @@
 void test_kernel_simple_success(void **state) {
     state_context *context_holder = (state_context*)*state;
 
-    // nn_neural_net const * const net, 
-    //                         ELEMENT_TYPE *input, unsigned int input_length,
-    //                         ELEMENT_TYPE *output, unsigned int output_length
-
-    #define MAX_L 1024
-    float * input = (float*)malloc(MAX_L * sizeof(ELEMENT_TYPE));
-    float * output = (float*)malloc(MAX_L * sizeof(ELEMENT_TYPE));
-    float * layers = (float*)malloc(MAX_L * sizeof(ELEMENT_TYPE));
-
-    for(int i = 0; i < MAX_L; i++) {
-        input[i] = i;
-        output[i] = 0;
-        layers[i] = i;
-    }
+    float input[] = {1, 2, 3};
+    float output[] = {110, 110, 110, 110};
+    float synapses[] = {
+        1, 1, 1, 1,
+        2, 2, 2, 2,
+        3, 3, 3, 3
+    };
+    float biases[] = {0, 0, 0, 0};
+    unsigned int layer_meta[] = {3, 4};
 
     nn_neural_net net;
-
-    net.layers = layers;
+    net.synapses = &synapses[0];
+    net.biases = biases;
+    net.layer_meta = &layer_meta[0];
+    net.layer_meta_length = 2;
 
     nn_execute_kernel(context_holder->context, context_holder->system_info, context_holder->system_context,
-        &net, input, MAX_L, output, MAX_L);
+        &net, input, output);
 }

@@ -13,12 +13,14 @@ static void network_info(unsigned int * const fan_in, unsigned int * const fan_o
     *max_synapse_layer = 0;
     *fan_in = layer_meta[0];
     *fan_out = layer_meta[layer_meta_length - 1];
+    *longest_layer = layer_meta[0];
     unsigned int sum;
     for(unsigned int i = 1; i < layer_meta_length; i++) {
         sum = layer_meta[i] * layer_meta[i -1];
         *synapses_length += sum;
         *bias_length += layer_meta[i];
-        if(sum > *max_synapse_layer){ *max_synapse_layer = sum; }
+        if(sum > *max_synapse_layer) { *max_synapse_layer = sum; }
+        if(layer_meta[i] > *longest_layer) { *longest_layer = layer_meta[i]; }
     }
     return;
 }
@@ -48,7 +50,7 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
     cl_error = 0;
     // Largest buffers we need.
     cl_mem cl_input_output_buffer = clCreateBuffer(
-        system_context->context, CL_MEM_HOST_READ_ONLY | CL_MEM_HOST_WRITE_ONLY | CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR,
+        system_context->context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR,
         input_output_size_in_bytes, NULL, &cl_error);
 
     cl_mem cl_synapses_buffer = clCreateBuffer(
@@ -63,17 +65,18 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
     unsigned int row_length, column_length; 
     for(unsigned int layer = 1; layer <= layer_count; layer++) {
         // Load in memory in the buffers.
-        row_length = net->layer_meta[layer - 1];
-        column_length = net->layer_meta[layer - 2];
-        synapses_matrix_size = net->layer_meta[layer - 1] * net->layer_meta[layer - 2];
+        row_length = net->layer_meta[layer];
+        column_length = net->layer_meta[layer - 1];
+        synapses_matrix_size = row_length * column_length;
         cl_error = clEnqueueWriteBuffer(system_context->command_queue, cl_synapses_buffer, CL_FALSE, 0,
-            synapses_matrix_size, net->synapses + synapses_matrix_offset, 0, NULL, NULL);
+            synapses_matrix_size * sizeof(ELEMENT_TYPE), net->synapses + synapses_matrix_offset, 0, NULL, NULL);
+        clFlush(system_context->command_queue);
 
         // Setup kernel args.
         cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 0, sizeof(unsigned int), &row_length);
         cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 1, sizeof(unsigned int), &column_length);
-        cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 3, sizeof(cl_mem), &cl_synapses_buffer);
-        cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 4, sizeof(cl_mem), &cl_synapses_buffer);
+        cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 2, sizeof(cl_mem), &cl_synapses_buffer);
+        cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 3, sizeof(cl_mem), &cl_input_output_buffer);
 
         size_t global = 1024;
         size_t local = 1024;
@@ -82,7 +85,7 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
         clFlush(system_context->command_queue);
     }
 
-    cl_error = clEnqueueReadBuffer(system_context->command_queue, cl_input_output_buffer, CL_TRUE, 0, fan_out * sizeof(ELEMENT_TYPE), output, 0, 0, NULL);
+    cl_error = clEnqueueReadBuffer(system_context->command_queue, cl_input_output_buffer, CL_TRUE, 0, fan_out * sizeof(ELEMENT_TYPE), output, 0, NULL, NULL);
     clFlush(system_context->command_queue);
 
     clReleaseMemObject(cl_synapses_buffer);
