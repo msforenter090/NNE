@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 // Simple kernel.
 // -----------------------------------------------------------------------------
-#define VECTOR_ADD 0
+#define KERNEL 0
 extern const char **simple_kernel_names_list;
 extern const char **simple_kernel_sources_list;
 extern void simple_kernel_sources(nn_kernel_source *const sources);

@@ -14,12 +14,12 @@ void test_kernel_simple_success(void **state) {
         2, 2, 2, 2,
         3, 3, 3, 3
     };
-    float biases[] = {0, 0, 0, 0};
+    float biases[] = {1, 2, 3, 4};
     unsigned int layer_meta[] = {3, 4};
 
     nn_neural_net net;
     net.synapses = &synapses[0];
-    net.biases = biases;
+    net.biases = &biases[0];
     net.layer_meta = &layer_meta[0];
     net.layer_meta_length = 2;
 

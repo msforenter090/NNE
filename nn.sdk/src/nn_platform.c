@@ -45,6 +45,7 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
     nn_runtime_cl_kernels_info(host_context, system_info, system_context, &sources, &kernel);
 
     unsigned int input_output_size_in_bytes = longest_layer * sizeof(ELEMENT_TYPE);
+    unsigned int biases_size_in_bytes = longest_layer * sizeof(ELEMENT_TYPE);
     unsigned int synapse_size_in_bytes = max_synapse_layer * sizeof(ELEMENT_TYPE);
 
     cl_error = 0;
@@ -57,31 +58,44 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
         system_context->context, CL_MEM_HOST_WRITE_ONLY | CL_MEM_READ_ONLY | CL_MEM_ALLOC_HOST_PTR,
         synapse_size_in_bytes, NULL, &cl_error);
 
+    cl_mem cl_biases_buffer = clCreateBuffer(
+        system_context->context, CL_MEM_HOST_WRITE_ONLY | CL_MEM_READ_ONLY | CL_MEM_ALLOC_HOST_PTR,
+        biases_size_in_bytes, NULL, &cl_error);
+
     cl_error = clEnqueueWriteBuffer(system_context->command_queue, cl_input_output_buffer, CL_FALSE, 0,
             fan_in * sizeof(ELEMENT_TYPE), input, 0, NULL, NULL);
 
     unsigned int synapses_matrix_size = 0;
+    unsigned int bias_matrix_size = 0;
     unsigned int synapses_matrix_offset = 0;
+    unsigned int biases_matrix_offset = 0;
     unsigned int row_length, column_length; 
     for(unsigned int layer = 1; layer <= layer_count; layer++) {
         // Load in memory in the buffers.
         row_length = net->layer_meta[layer];
         column_length = net->layer_meta[layer - 1];
+        bias_matrix_size = net->layer_meta[layer];
         synapses_matrix_size = row_length * column_length;
+
         cl_error = clEnqueueWriteBuffer(system_context->command_queue, cl_synapses_buffer, CL_FALSE, 0,
             synapses_matrix_size * sizeof(ELEMENT_TYPE), net->synapses + synapses_matrix_offset, 0, NULL, NULL);
-        clFlush(system_context->command_queue);
+        cl_error = clEnqueueWriteBuffer(system_context->command_queue, cl_biases_buffer, CL_FALSE, 0,
+            net->layer_meta[layer] * sizeof(ELEMENT_TYPE), net->biases + biases_matrix_offset, 0, NULL, NULL);
+
+        // clFlush(system_context->command_queue);
 
         // Setup kernel args.
-        cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 0, sizeof(unsigned int), &row_length);
-        cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 1, sizeof(unsigned int), &column_length);
-        cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 2, sizeof(cl_mem), &cl_synapses_buffer);
-        cl_error = clSetKernelArg(kernel.kernels[VECTOR_ADD], 3, sizeof(cl_mem), &cl_input_output_buffer);
+        cl_error = clSetKernelArg(kernel.kernels[KERNEL], 0, sizeof(unsigned int), &row_length);
+        cl_error = clSetKernelArg(kernel.kernels[KERNEL], 1, sizeof(unsigned int), &column_length);
+        cl_error = clSetKernelArg(kernel.kernels[KERNEL], 2, sizeof(cl_mem), &cl_synapses_buffer);
+        cl_error = clSetKernelArg(kernel.kernels[KERNEL], 3, sizeof(cl_mem), &cl_biases_buffer);
+        cl_error = clSetKernelArg(kernel.kernels[KERNEL], 4, sizeof(cl_mem), &cl_input_output_buffer);
 
         size_t global = 1024;
         size_t local = 1024;
-        cl_error = clEnqueueNDRangeKernel(system_context->command_queue, kernel.kernels[VECTOR_ADD], 1, NULL, &global, &local, 0, NULL, NULL);
+        cl_error = clEnqueueNDRangeKernel(system_context->command_queue, kernel.kernels[KERNEL], 1, NULL, &global, &local, 0, NULL, NULL);
         synapses_matrix_offset += synapses_matrix_size;
+        biases_matrix_offset += bias_matrix_size;
         clFlush(system_context->command_queue);
     }
 
