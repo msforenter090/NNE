@@ -138,8 +138,8 @@ cleanup_label(clCreateProgramWithSource):
     return error;
 }
 
-nn_error nn_runtime_cl_build_program(CONTEXT, nn_kernel_source  const* const source, nn_kernel *const kernel) {
-    cl_int cl_error = clBuildProgram(kernel->program, 0, NULL, NULL, NULL, NULL);
+nn_error nn_runtime_cl_build_program(CONTEXT, nn_kernel_source  const* const source, nn_kernel *const kernel, const char *options) {
+    cl_int cl_error = clBuildProgram(kernel->program, 0, NULL, options, NULL, NULL);
     nn_error error = map_error_code(cl_error, CL_ERROR_MAPPER_BUILD_PROGRAM, CL_ERROR_MAPPER_BUILD_PROGRAM_LENGTH);
     check_nn_error_log(host_context, error);
     check_nn_error_jump(error, cleanup_label(clBuildProgram));

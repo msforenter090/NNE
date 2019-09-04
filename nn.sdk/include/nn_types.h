@@ -55,6 +55,11 @@ struct _nn_host_context {
     nn_info_callback info_logger;
     nn_warning_callback warning_logger;
     nn_error_callback error_logger;
+    
+    // -------------------------------------------------------------------------
+    // Util buffer.
+    // -------------------------------------------------------------------------
+    byte *util_buffer[3];
 };
 
 // -----------------------------------------------------------------------------

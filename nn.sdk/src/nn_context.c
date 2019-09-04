@@ -13,6 +13,9 @@ nn_error new_nn_context(nn_host_context *host_context, nn_allocate allocate, nn_
     new_context->info_logger = info;
     new_context->warning_logger = warning;
     new_context->error_logger = error;
+    new_context->util_buffer[0] = allocate(2048, 1);
+    new_context->util_buffer[1] = allocate(2048, 1);
+    new_context->util_buffer[2] = allocate(2048, 1);
     *host_context = new_context;
     return OK;
 }
@@ -50,6 +53,9 @@ nn_error delete_nn_system_info(CONTEXT) {
 }
 
 nn_error delete_nn_context(CONTEXT) {
+    host_context->deallocate(host_context->util_buffer[0]);
+    host_context->deallocate(host_context->util_buffer[1]);
+    host_context->deallocate(host_context->util_buffer[2]);
     host_context->deallocate(host_context);
     return OK;
 }

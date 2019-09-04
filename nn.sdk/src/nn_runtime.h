@@ -38,7 +38,7 @@ nn_error nn_runtime_select_device(CONTEXT);
 nn_error nn_runtime_cl_context(CONTEXT);
 nn_error nn_runtime_cl_command_queue(CONTEXT);
 nn_error nn_runtime_cl_program_from_source(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel);
-nn_error nn_runtime_cl_build_program(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel);
+nn_error nn_runtime_cl_build_program(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel, const char *options);
 nn_error nn_runtime_cl_kernels_from_program(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel);
 nn_error nn_runtime_cl_kernels_info(CONTEXT, nn_kernel_source const* const source, nn_kernel *const kernel);
 
