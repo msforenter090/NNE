@@ -64,8 +64,8 @@ typedef struct _nn_kernel_info {
 
 typedef struct _nn_kernel {
     cl_program program;
-    cl_kernel kernels[MAX_KERNELS_PER_EXECUTION];
-    nn_kernel_info info[MAX_KERNELS_PER_EXECUTION];
+    cl_kernel *kernels;
+    nn_kernel_info *info;
 } nn_kernel;
 
 // -----------------------------------------------------------------------------

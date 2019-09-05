@@ -15,14 +15,17 @@
 #ifndef __NN_KERNELS_H__
 #define __NN_KERNELS_H__
 
+#include "nn.sdk.common/nn_error.h"
 #include "nn_types_internal.h"
+#include "nn_types.h"
 
 // -----------------------------------------------------------------------------
 // Simple kernel.
 // -----------------------------------------------------------------------------
 #define KERNEL 0
-extern const char **simple_kernel_names_list;
-extern const char **simple_kernel_sources_list;
-extern void simple_kernel_sources(nn_kernel_source *const sources);
+extern const char **network_execution_kernel_names_list;
+extern const char **network_execution_sources_list;
+extern nn_error network_execution_sources(nn_kernel_source *const sources);
+extern nn_error network_execution_kernel(CONTEXT, nn_kernel **kernel);
 
 #endif // __NN_KERNELS_H__

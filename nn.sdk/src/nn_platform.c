@@ -30,7 +30,7 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
     // TODO: Check if any of the layers, or input is larger than MAX_BUFFER_ALLOC
     cl_int cl_error;
     cl_uint counter;
-    nn_kernel kernel;
+    nn_kernel *kernel;
     nn_kernel_source sources;
 
     unsigned int fan_in, fan_out, bias_length, longest_layer, synapses_length, max_synapse_layer;
@@ -38,11 +38,13 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
     network_info(&fan_in, &fan_out, &bias_length, &longest_layer,
         &synapses_length, &max_synapse_layer, net->layer_meta, net->layer_meta_length);
  
-    simple_kernel_sources(&sources);
-    nn_runtime_cl_program_from_source(host_context, system_info, system_context, &sources, &kernel);
-    nn_runtime_cl_build_program(host_context, system_info, system_context, &sources, &kernel, NULL);
-    nn_runtime_cl_kernels_from_program(host_context, system_info, system_context, &sources, &kernel);
-    nn_runtime_cl_kernels_info(host_context, system_info, system_context, &sources, &kernel);
+    network_execution_sources(&sources);
+    network_execution_kernel(host_context, system_info, system_context, &kernel);
+
+    nn_runtime_cl_program_from_source(host_context, system_info, system_context, &sources, kernel);
+    nn_runtime_cl_build_program(host_context, system_info, system_context, &sources, kernel, NULL);
+    nn_runtime_cl_kernels_from_program(host_context, system_info, system_context, &sources, kernel);
+    nn_runtime_cl_kernels_info(host_context, system_info, system_context, &sources, kernel);
 
     unsigned int input_output_size_in_bytes = longest_layer * sizeof(ELEMENT_TYPE);
     unsigned int biases_size_in_bytes = longest_layer * sizeof(ELEMENT_TYPE);
@@ -69,7 +71,7 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
     unsigned int bias_matrix_size = 0;
     unsigned int synapses_matrix_offset = 0;
     unsigned int biases_matrix_offset = 0;
-    unsigned int row_length, column_length; 
+    unsigned int row_length, column_length;
     for(unsigned int layer = 1; layer <= layer_count; layer++) {
         // Load in memory in the buffers.
         row_length = net->layer_meta[layer];
@@ -85,15 +87,15 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
         // clFlush(system_context->command_queue);
 
         // Setup kernel args.
-        cl_error = clSetKernelArg(kernel.kernels[KERNEL], 0, sizeof(unsigned int), &row_length);
-        cl_error = clSetKernelArg(kernel.kernels[KERNEL], 1, sizeof(unsigned int), &column_length);
-        cl_error = clSetKernelArg(kernel.kernels[KERNEL], 2, sizeof(cl_mem), &cl_synapses_buffer);
-        cl_error = clSetKernelArg(kernel.kernels[KERNEL], 3, sizeof(cl_mem), &cl_biases_buffer);
-        cl_error = clSetKernelArg(kernel.kernels[KERNEL], 4, sizeof(cl_mem), &cl_input_output_buffer);
+        cl_error = clSetKernelArg(kernel->kernels[KERNEL], 0, sizeof(unsigned int), &row_length);
+        cl_error = clSetKernelArg(kernel->kernels[KERNEL], 1, sizeof(unsigned int), &column_length);
+        cl_error = clSetKernelArg(kernel->kernels[KERNEL], 2, sizeof(cl_mem), &cl_synapses_buffer);
+        cl_error = clSetKernelArg(kernel->kernels[KERNEL], 3, sizeof(cl_mem), &cl_biases_buffer);
+        cl_error = clSetKernelArg(kernel->kernels[KERNEL], 4, sizeof(cl_mem), &cl_input_output_buffer);
 
         size_t global = 1024;
         size_t local = 1024;
-        cl_error = clEnqueueNDRangeKernel(system_context->command_queue, kernel.kernels[KERNEL], 1, NULL, &global, &local, 0, NULL, NULL);
+        cl_error = clEnqueueNDRangeKernel(system_context->command_queue, kernel->kernels[KERNEL], 1, NULL, &global, &local, 0, NULL, NULL);
         synapses_matrix_offset += synapses_matrix_size;
         biases_matrix_offset += bias_matrix_size;
         clFlush(system_context->command_queue);
@@ -106,12 +108,12 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
     clReleaseMemObject(cl_input_output_buffer);
 
     counter = 0;
-    cl_kernel cl_kernel = kernel.kernels[counter];
+    cl_kernel cl_kernel = kernel->kernels[counter];
     while(cl_kernel != NULL) {
         clReleaseKernel(cl_kernel);
         counter++;
-        cl_kernel = kernel.kernels[counter];
+        cl_kernel = kernel->kernels[counter];
     }
-    clReleaseProgram(kernel.program);
+    clReleaseProgram(kernel->program);
     return OK;
 }

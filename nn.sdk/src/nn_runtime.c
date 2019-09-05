@@ -168,7 +168,6 @@ nn_error nn_runtime_cl_kernels_from_program(CONTEXT, nn_kernel_source const * co
     return error;
 
 cleanup_label(clCreateKernel):
-    memset(kernel->kernels, 0, MAX_KERNELS_PER_EXECUTION * sizeof(cl_kernel));
     return error;
 }
 

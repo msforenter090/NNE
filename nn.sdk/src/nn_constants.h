@@ -21,6 +21,7 @@
 #define MAX_TEXT_BLOCK 1024
 
 // Execution.
-#define MAX_KERNELS_PER_EXECUTION 4
+// #define MAX_KERNELS_PER_EXECUTION 4
+// #define MAX_BUFFERS_PER_EXECUTION 20
 
 #endif // __NN_CONSTANTS_H__
