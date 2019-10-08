@@ -22,7 +22,6 @@
 #define CODE_OK 0
 #define CODE_FAIL 1
 #define CODE_UNKNOWN 2
-#define CODE_INVALID_PARAM 3
 
 // Memory errors [101 - 200]
 #define CODE_NO_MEMORY 101
@@ -40,5 +39,12 @@ typedef struct _nn_error {
 // -----------------------------------------------------------------------------
 static const nn_error OK = {.code = CODE_OK, .message = "Ok.\0"};
 static const nn_error FAIL = {.code = CODE_FAIL, .message = "Fail.\0"};
+
+// -----------------------------------------------------------------------------
+// Defines.
+// -----------------------------------------------------------------------------
+#define SUCCESS_CONDITION(error) if(error.code == 0)
+#define JUMP_IF_NOT(label, ...) __VA_ARGS__ goto label
+#define LABEL(function_name) cleanup_##function_name
 
 #endif // __NN_ERROR_H__

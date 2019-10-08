@@ -5,22 +5,22 @@
 #include "nn_runtime.h"
 
 static void network_info(unsigned int * const fan_in, unsigned int * const fan_out, unsigned int * const bias_length,
-                        unsigned int * const longest_layer, unsigned int * const synapses_length, 
-                        unsigned int * const max_synapse_layer, unsigned int const * const layer_meta,
+                        unsigned int * const longest_output, unsigned int * const synapses_length, 
+                        unsigned int * const longest_synapse_layer, unsigned int const * const layer_meta,
                         unsigned int layer_meta_length) {
     *bias_length = 0;
     *synapses_length = 0;
-    *max_synapse_layer = 0;
+    *longest_synapse_layer = 0;
     *fan_in = layer_meta[0];
     *fan_out = layer_meta[layer_meta_length - 1];
-    *longest_layer = layer_meta[0];
+    *longest_output = layer_meta[0];
     unsigned int sum;
     for(unsigned int i = 1; i < layer_meta_length; i++) {
         sum = layer_meta[i] * layer_meta[i -1];
         *synapses_length += sum;
         *bias_length += layer_meta[i];
-        if(sum > *max_synapse_layer) { *max_synapse_layer = sum; }
-        if(layer_meta[i] > *longest_layer) { *longest_layer = layer_meta[i]; }
+        if(sum > *longest_synapse_layer) { *longest_synapse_layer = sum; }
+        if(layer_meta[i] > *longest_output) { *longest_output = layer_meta[i]; }
     }
     return;
 }
@@ -33,22 +33,22 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
     nn_kernel *kernel;
     nn_kernel_source sources;
 
-    unsigned int fan_in, fan_out, bias_length, longest_layer, synapses_length, max_synapse_layer;
     unsigned int layer_count = net->layer_meta_length - 1;
-    network_info(&fan_in, &fan_out, &bias_length, &longest_layer,
-        &synapses_length, &max_synapse_layer, net->layer_meta, net->layer_meta_length);
+    unsigned int fan_in, fan_out, bias_length, longest_output, synapses_length, longest_synapse_layer;
+    network_info(&fan_in, &fan_out, &bias_length, &longest_output,
+        &synapses_length, &longest_synapse_layer, net->layer_meta, net->layer_meta_length);
  
-    network_execution_sources(&sources);
-    network_execution_kernel(host_context, system_info, system_context, &kernel);
+    network_solve_tight_sources(&sources);
+    network_solve_tight_kernel(host_context, system_info, system_context, &kernel);
 
     nn_runtime_cl_program_from_source(host_context, system_info, system_context, &sources, kernel);
     nn_runtime_cl_build_program(host_context, system_info, system_context, &sources, kernel, NULL);
     nn_runtime_cl_kernels_from_program(host_context, system_info, system_context, &sources, kernel);
     nn_runtime_cl_kernels_info(host_context, system_info, system_context, &sources, kernel);
 
-    unsigned int input_output_size_in_bytes = longest_layer * sizeof(ELEMENT_TYPE);
-    unsigned int biases_size_in_bytes = longest_layer * sizeof(ELEMENT_TYPE);
-    unsigned int synapse_size_in_bytes = max_synapse_layer * sizeof(ELEMENT_TYPE);
+    unsigned int input_output_size_in_bytes = longest_output * sizeof(ELEMENT_TYPE);
+    unsigned int biases_size_in_bytes = longest_output * sizeof(ELEMENT_TYPE);
+    unsigned int synapse_size_in_bytes = longest_synapse_layer * sizeof(ELEMENT_TYPE);
 
     cl_error = 0;
     // Largest buffers we need.
@@ -84,18 +84,16 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
         cl_error = clEnqueueWriteBuffer(system_context->command_queue, cl_biases_buffer, CL_FALSE, 0,
             net->layer_meta[layer] * sizeof(ELEMENT_TYPE), net->biases + biases_matrix_offset, 0, NULL, NULL);
 
-        // clFlush(system_context->command_queue);
-
         // Setup kernel args.
-        cl_error = clSetKernelArg(kernel->kernels[KERNEL], 0, sizeof(unsigned int), &row_length);
-        cl_error = clSetKernelArg(kernel->kernels[KERNEL], 1, sizeof(unsigned int), &column_length);
-        cl_error = clSetKernelArg(kernel->kernels[KERNEL], 2, sizeof(cl_mem), &cl_synapses_buffer);
-        cl_error = clSetKernelArg(kernel->kernels[KERNEL], 3, sizeof(cl_mem), &cl_biases_buffer);
-        cl_error = clSetKernelArg(kernel->kernels[KERNEL], 4, sizeof(cl_mem), &cl_input_output_buffer);
+        cl_error = clSetKernelArg(kernel->kernels[KERNEL_SOLVE_TIGHT], 0, sizeof(unsigned int), &row_length);
+        cl_error = clSetKernelArg(kernel->kernels[KERNEL_SOLVE_TIGHT], 1, sizeof(unsigned int), &column_length);
+        cl_error = clSetKernelArg(kernel->kernels[KERNEL_SOLVE_TIGHT], 2, sizeof(cl_mem), &cl_synapses_buffer);
+        cl_error = clSetKernelArg(kernel->kernels[KERNEL_SOLVE_TIGHT], 3, sizeof(cl_mem), &cl_biases_buffer);
+        cl_error = clSetKernelArg(kernel->kernels[KERNEL_SOLVE_TIGHT], 4, sizeof(cl_mem), &cl_input_output_buffer);
 
         size_t global = 1024;
         size_t local = 1024;
-        cl_error = clEnqueueNDRangeKernel(system_context->command_queue, kernel->kernels[KERNEL], 1, NULL, &global, &local, 0, NULL, NULL);
+        cl_error = clEnqueueNDRangeKernel(system_context->command_queue, kernel->kernels[KERNEL_SOLVE_TIGHT], 1, NULL, &global, &local, 0, NULL, NULL);
         synapses_matrix_offset += synapses_matrix_size;
         biases_matrix_offset += bias_matrix_size;
         clFlush(system_context->command_queue);

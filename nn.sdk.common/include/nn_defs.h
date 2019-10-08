@@ -24,10 +24,4 @@
 #endif
 #endif
 
-#if defined(_MSC_VER)
-#if _MSC_VER < 1912
-#error "Min compiler version error."
-#endif
-#endif
-
 #endif // __DEFS_H__

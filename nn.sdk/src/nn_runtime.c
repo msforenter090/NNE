@@ -140,6 +140,18 @@ cleanup_label(clCreateProgramWithSource):
 
 nn_error nn_runtime_cl_build_program(CONTEXT, nn_kernel_source  const* const source, nn_kernel *const kernel, const char *options) {
     cl_int cl_error = clBuildProgram(kernel->program, 0, NULL, options, NULL, NULL);
+    // TODO:
+    if(cl_error != CL_SUCCESS) {
+        char *message;
+        size_t param_size;
+        cl_error = clGetProgramBuildInfo(kernel->program, system_context->device, CL_PROGRAM_BUILD_LOG, 0, NULL, &param_size);
+
+        message = (char*)host_context->allocate(param_size, 1);
+        memset(message, 0, param_size);
+        cl_error = clGetProgramBuildInfo(kernel->program, system_context->device, CL_PROGRAM_BUILD_LOG, param_size, message, NULL);
+        host_context->error_logger(message, param_size);
+        host_context->deallocate(message);
+    }
     nn_error error = map_error_code(cl_error, CL_ERROR_MAPPER_BUILD_PROGRAM, CL_ERROR_MAPPER_BUILD_PROGRAM_LENGTH);
     check_nn_error_log(host_context, error);
     check_nn_error_jump(error, cleanup_label(clBuildProgram));

@@ -20,12 +20,12 @@
 #include "nn_types.h"
 
 // -----------------------------------------------------------------------------
-// Simple kernel.
+// Solve.
 // -----------------------------------------------------------------------------
-#define KERNEL 0
-extern const char **network_execution_kernel_names_list;
-extern const char **network_execution_sources_list;
-extern nn_error network_execution_sources(nn_kernel_source *const sources);
-extern nn_error network_execution_kernel(CONTEXT, nn_kernel **kernel);
+#define KERNEL_SOLVE_TIGHT 0
+extern const char **network_solve_tight_kernel_names_list;
+extern const char **network_solve_tight_sources_list;
+extern nn_error network_solve_tight_sources(nn_kernel_source *const sources);
+extern nn_error network_solve_tight_kernel(CONTEXT, nn_kernel **kernel);
 
 #endif // __NN_KERNELS_H__
