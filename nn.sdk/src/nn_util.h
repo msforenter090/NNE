@@ -1,5 +1,5 @@
-#ifndef __NN_UTIL_H__
-#define __NN_UTIL_H__
+#ifndef __NN_SDK_UTIL_H__
+#define __NN_SDK_UTIL_H__
 
 #include <string.h>
 
@@ -12,4 +12,4 @@
 
 #define cleanup_label(function) function##Cleanup
 
-#endif // __NN_UTIL_H__
+#endif // __NN_SDK_UTIL_H__

@@ -12,8 +12,8 @@
 //
 // =================================================================================================
 
-#ifndef __NN_MATRIX_H__
-#define __NN_MATRIX_H__
+#ifndef __NN_SDK_MATRIX_H__
+#define __NN_SDK_MATRIX_H__
 
 #include "nn_defs.h"
 #include "nn_types.h"
@@ -26,25 +26,25 @@
 // -------------------------------------
 
 #define ELEMENT_TYPE float
-
-typedef struct _nn_f_matrix_meta {
-    unsigned int rows;
-    unsigned int columns;
-    unsigned int element_size;
-} nn_fmatrix_meta;
-
-typedef struct _nn_neural_net {
-    ELEMENT_TYPE *biases;
-    ELEMENT_TYPE *synapses;
-    unsigned int *layer_meta;
-    unsigned int layer_meta_length;
-} nn_neural_net;
-
+// 
+// typedef struct _nn_f_matrix_meta {
+//     unsigned int rows;
+//     unsigned int columns;
+//     unsigned int element_size;
+// } nn_fmatrix_meta;
+// 
+// typedef struct _nn_neural_net {
+//     ELEMENT_TYPE *biases;
+//     ELEMENT_TYPE *synapses;
+//     unsigned int *layer_meta;
+//     unsigned int layer_meta_length;
+// } nn_neural_net;
+// 
 // -----------------------------------------------------------------------------
 // Functions.
 // -----------------------------------------------------------------------------
-extern DLL_PUBLIC ELEMENT_TYPE cm_read_element(unsigned int column, unsigned int row, ELEMENT_TYPE * const matrix);
-extern DLL_PUBLIC ELEMENT_TYPE* new_nn_fmatrix(CONTEXT, const nn_fmatrix_meta *const meta);
-extern DLL_PUBLIC void destroy_nn_matrix(CONTEXT, ELEMENT_TYPE *const matrix);
+// extern DLL_PUBLIC ELEMENT_TYPE cm_read_element(unsigned int column, unsigned int row, ELEMENT_TYPE * const matrix);
+// extern DLL_PUBLIC ELEMENT_TYPE* new_nn_fmatrix(CONTEXT, const nn_fmatrix_meta *const meta);
+// extern DLL_PUBLIC void destroy_nn_matrix(CONTEXT, ELEMENT_TYPE *const matrix);
 
-#endif // __NN_MATRIX_H__
+#endif // __NN_SDK_MATRIX_H__

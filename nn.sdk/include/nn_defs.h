@@ -12,8 +12,8 @@
 //
 // =================================================================================================
 
-#ifndef __DEFS_H__
-#define __DEFS_H__
+#ifndef __NN_SDK_DEFS_H__
+#define __NN_SDK_DEFS_H__
 #if defined(__GNUC__)
     #if __GNUC__ < 4
         #error "Min compiler version error."
@@ -23,4 +23,4 @@
 #else
     #error "Unknown compiler."
 #endif
-#endif // __DEFS_H__
+#endif // __NN_SDK_DEFS_H__

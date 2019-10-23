@@ -1,60 +1,52 @@
 #include "nn_runtime.h"
 
-#include "nn_util.h"
-#include "nn_constants.h"
-#include "nn_cl_include.h"
-#include "nn_error_mapper.h"
+#include "nn_cl_include.h"              // cl_uint, clGetPlatformIDs
+#include "nn_error_mapper.h"            // map_error_code
+#include "nn.sdk.common/nn_util.h"      // min
 
-nn_error nn_runtime_platforms(CONTEXT) {
-    cl_uint cl_error = clGetPlatformIDs(MAX_PLATFORMS, system_info->platforms, NULL);
-    nn_error error = map_error_code(cl_error, CL_ERROR_MAPPER_GET_PLATFORM_IDS, CL_ERROR_MAPPER_GET_PLATFORM_IDS_LENGTH);
-    check_nn_error_log(host_context, error);
-    check_nn_error_jump(error, cleanup_label(clGetPlatformIDs));
-    return error;
-
-cleanup_label(clGetPlatformIDs):
-    return error;
+nn_error nn_runtime_platform_count(unsigned int* count) {
+    cl_uint cl_error = clGetPlatformIDs(0, NULL, count);
+    return map_error_code(cl_error, CL_ERROR_MAPPER_GET_PLATFORM_IDS, CL_ERROR_MAPPER_GET_PLATFORM_IDS_LENGTH);
 }
 
-nn_error nn_runtime_devices(CONTEXT) {
-    cl_int cl_error = 0;
+nn_error nn_runtime_platforms(unsigned int count, cl_platform_id *platforms) {
+    cl_uint cl_error = clGetPlatformIDs(count, platforms, NULL);
+    return map_error_code(cl_error, CL_ERROR_MAPPER_GET_PLATFORM_IDS, CL_ERROR_MAPPER_GET_PLATFORM_IDS_LENGTH);
+}
+
+nn_error nn_runtime_devices_count(unsigned int platform_count, cl_platform_id * const platforms, unsigned int *count) {
     nn_error error;
+    cl_int cl_error = CL_SUCCESS;
+    cl_uint per_platform = 0;
+    for(int i = 0; i< platform_count; i++) {
+        cl_error = clGetDeviceIDs(platforms[i], CL_DEVICE_TYPE_ALL, 0, NULL, &per_platform);
+        if(cl_error != CL_SUCCESS) break;
+        *count += per_platform;
+    }
+    return map_error_code(cl_error, CL_ERROR_MAPPER_GET_DEVICE_IDS, CL_ERROR_MAPPER_GET_DEVICE_IDS_LENGTH);
+}
 
-    cl_platform_id platform = system_info->platforms[0];
-    cl_uint devices_per_platform = 0;
-    cl_uint total_devices = 0;
-    for (unsigned short i = 0; system_info->platforms[i] != NULL; i++) {
-        devices_per_platform = 0;
-        cl_error = clGetDeviceIDs(system_info->platforms[i], CL_DEVICE_TYPE_ALL, 0, NULL, &devices_per_platform);
-        error = map_error_code(cl_error, CL_ERROR_MAPPER_GET_DEVICE_IDS, CL_ERROR_MAPPER_GET_DEVICE_IDS_LENGTH);
-        check_nn_error_log(host_context, error);
-        check_nn_error_jump(error, cleanup_label(clGetDeviceIDsLength));
-
-        cl_error = clGetDeviceIDs(system_info->platforms[i], CL_DEVICE_TYPE_ALL, devices_per_platform,
-                       system_info->devices + total_devices, NULL);
-        error = map_error_code(cl_error, CL_ERROR_MAPPER_GET_DEVICE_IDS, CL_ERROR_MAPPER_GET_DEVICE_IDS_LENGTH);
-        check_nn_error_log(host_context, error);
-        check_nn_error_jump(error, cleanup_label(clGetDeviceIDs));
-        
-        for (unsigned short j = 0; j < devices_per_platform; j++) {
-            system_info->device_platform_mapping[total_devices + j] = i;
-        }
+nn_error nn_runtime_devices(unsigned int platform_count, cl_platform_id * const platforms,
+                            cl_device_id *devices, unsigned int device_count) {
+    cl_int cl_error = CL_SUCCESS;
+    cl_int total_devices = 0;
+    for(int i = 0; i < platform_count; i++) {
+        cl_int devices_per_platform = 0;
+        clGetDeviceIDs(platforms[i], CL_DEVICE_TYPE_ALL, 0, NULL, &devices_per_platform);
+        cl_error = clGetDeviceIDs(platforms[i], CL_DEVICE_TYPE_ALL, devices_per_platform,
+                                devices + total_devices, NULL);
+        if(cl_error != CL_SUCCESS) break;
         total_devices += devices_per_platform;
     }
-    return error;
-
-cleanup_label(clGetDeviceIDsLength):
-cleanup_label(clGetDeviceIDs):
-    memset(system_info->devices, 0, sizeof(cl_device_id) * MAX_DEVICES);
-    memset(system_info->device_platform_mapping, 0, sizeof(unsigned short) * MAX_DEVICES);
-    return error;
+    return map_error_code(cl_error, CL_ERROR_MAPPER_GET_DEVICE_IDS, CL_ERROR_MAPPER_GET_DEVICE_IDS_LENGTH);
 }
 
-nn_error nn_runtime_devices_info(CONTEXT) {
+nn_error nn_runtime_devices_info(unsigned int device_length, cl_device_id *devices,
+                                const unsigned int info_length, struct _nn_device_info *infos) {
     cl_device_id device = NULL;
-    for (unsigned short i = 0; system_info->devices[i] != NULL; i++) {
-        device = system_info->devices[i];
-        nn_device_info *info = &(system_info->device_info[i]);
+    for (unsigned int i = 0; i < min(device_length, info_length); i++) {
+        device = devices[i];
+        nn_device_info *info = infos + i;
         // clang-format off
         clGetDeviceInfo(device, CL_DEVICE_AVAILABLE, sizeof(info->available), &(info->available), NULL);
         clGetDeviceInfo(device, CL_DEVICE_COMPILER_AVAILABLE, sizeof(info->compiler), &(info->compiler), NULL);
@@ -70,20 +62,20 @@ nn_error nn_runtime_devices_info(CONTEXT) {
         clGetDeviceInfo(device, CL_DEVICE_MAX_MEM_ALLOC_SIZE, sizeof(info->max_memory_alloc_size), &(info->max_memory_alloc_size), NULL);
         clGetDeviceInfo(device, CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(info->max_work_group_size), &(info->max_work_group_size), NULL);
         clGetDeviceInfo(device, CL_DEVICE_MAX_WORK_ITEM_SIZES, sizeof(info->max_work_item_sizes), &(info->max_work_item_sizes), NULL);
+        clGetDeviceInfo(device, CL_DEVICE_PLATFORM, sizeof(info->platform), &(info->platform), NULL);
         clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(info->device_type), &(info->device_type), NULL);
         // clang-format on
     }
     return OK;
 }
 
-nn_error nn_runtime_select_device(CONTEXT) {
-    // Use first device.
-    // TODO - TASK-1: Changed this. For now use first device, but should usedo dome kind of filtering.
-    memcpy(&(system_context->platform), system_info->platforms, sizeof(cl_platform_id));
-    memcpy(&(system_context->device), system_info->devices, sizeof(cl_device_id));
-    memcpy(&(system_context->device_info), system_info->device_info, sizeof(struct _nn_device_info));
+nn_error nn_runtime_select_device(struct _nn_system_info *system_info,
+                                struct _nn_system_context *system_context) {
+    system_context->device = system_info->devices + 0;
+    system_context->device_info = system_info->devices_info + 0;
+    return OK;
 }
-
+/*
 nn_error nn_runtime_cl_context(CONTEXT) {
     cl_context_properties properties[] = {CL_CONTEXT_PLATFORM, (cl_context_properties)system_context->platform, 0};
 
@@ -198,4 +190,4 @@ nn_error nn_runtime_cl_kernels_info(CONTEXT, nn_kernel_source const* const sourc
         cl_kernel = kernel->kernels[count];
     }
     return OK;
-}
+}*/

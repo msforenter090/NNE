@@ -12,8 +12,8 @@
 //
 // =================================================================================================
 
-#ifndef __DEFS_H__
-#define __DEFS_H__
+#ifndef __NN_SDK_COMMON_DEFS_H__
+#define __NN_SDK_COMMON_DEFS_H__
 
 // -----------------------------------------------------------------------------
 // Min values.
@@ -24,4 +24,4 @@
 #endif
 #endif
 
-#endif // __DEFS_H__
+#endif // __NN_SDK_COMMON_DEFS_H__

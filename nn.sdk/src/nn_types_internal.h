@@ -12,21 +12,18 @@
 //
 // =================================================================================================
 
-#ifndef __NN_TYPES_INTERNAL_H__
-#define __NN_TYPES_INTERNAL_H__
+#ifndef __NN_SDK_TYPES_INTERNAL_H__
+#define __NN_SDK_TYPES_INTERNAL_H__
 
 #include "nn_constants.h"
 #include "nn_cl_include.h"
+#include "nn.sdk.common/nn_types.h"
 
 // -----------------------------------------------------------------------------
-// Mapping for internal usage.
+// Innernal types.
+// Types used by the library.
 // -----------------------------------------------------------------------------
-typedef struct _nn_device_info nn_device_info;
-
-// -----------------------------------------------------------------------------
-// Internal Objects.
-// -----------------------------------------------------------------------------
-struct _nn_device_info {
+typedef struct _nn_device_info {
     cl_bool available;
     cl_bool compiler;
     cl_bool little_endian;
@@ -43,51 +40,97 @@ struct _nn_device_info {
                                     // using the data parallel execution model.
     size_t max_work_item_sizes[3];  // Maximum number of work-items that can be specified in each
                                     // dimension of the work-group.
+    cl_platform_id platform;
     cl_device_type device_type;
+} nn_device_info;
+
+// -----------------------------------------------------------------------------
+// Opaque types.
+// Types used by the library client.
+// -----------------------------------------------------------------------------
+struct _nn_host_context {
+    // -------------------------------------------------------------------------
+    // Memory.
+    // -------------------------------------------------------------------------
+    nn_allocate allocate;
+    nn_deallocate deallocate;
+
+    // -------------------------------------------------------------------------
+    // Logging.
+    // -------------------------------------------------------------------------
+    nn_log_callback logger;
+
+    // -------------------------------------------------------------------------
+    // Stack.
+    // -------------------------------------------------------------------------
+    void *util, *state;
+    void *util_top, *util_bottom, *state_top, *state_bottom;
 };
 
-// -----------------------------------------------------------------------------
-// Kernel construction.
-// -----------------------------------------------------------------------------
-typedef struct _nn_kernel_source {
-    const char **kernel_names;
-    const char **kernel_sources;
-    unsigned short kernel_names_length;
-    unsigned short kernel_sources_length;
-} nn_kernel_source;
-
-typedef struct _nn_kernel_info {
-    size_t kernel_work_group_size;
-    size_t kernel_compile_work_group_size[3];
-    cl_ulong kernel_local_mem_size;
-} nn_kernel_info;
-
-typedef struct _nn_kernel {
-    cl_program program;
-    cl_kernel *kernels;
-    nn_kernel_info *info;
-} nn_kernel;
-
-// -----------------------------------------------------------------------------
-// External Objects.
-// -----------------------------------------------------------------------------
 struct _nn_system_info {
-    cl_platform_id platforms[MAX_PLATFORMS];
-    cl_device_id devices[MAX_DEVICES];
-    nn_device_info device_info[MAX_DEVICES];
-    unsigned short device_platform_mapping[MAX_DEVICES];
+    unsigned int platform_count;
+    cl_platform_id *platforms;
+
+    unsigned int device_count;
+    cl_device_id *devices;
+
+    nn_device_info *devices_info;
 };
 
 struct _nn_system_context {
-    cl_platform_id platform;
-
-    // For now use just one device.
-    // TODO - TASK-1: In the future this should be expanded.
-    cl_device_id device;
-    nn_device_info device_info;
-
-    cl_context context;
-    cl_command_queue command_queue;
+    cl_device_id *device;
+    struct _nn_device_info *device_info;
 };
 
-#endif // __NN_TYPES_INTERNAL_H__
+// -----------------------------------------------------------------------------
+// Usefull macro.
+// -----------------------------------------------------------------------------
+#define STACK_STATE_TOP &(context->host_context->state_top)
+#define STACK_STATE_BOTTOM context->host_context->state_bottom
+
+// 
+// // -----------------------------------------------------------------------------
+// // Kernel construction.
+// // -----------------------------------------------------------------------------
+// typedef struct _nn_kernel_source {
+//     const char **kernel_names;
+//     const char **kernel_sources;
+//     unsigned short kernel_names_length;
+//     unsigned short kernel_sources_length;
+// } nn_kernel_source;
+// 
+// typedef struct _nn_kernel_info {
+//     size_t kernel_work_group_size;
+//     size_t kernel_compile_work_group_size[3];
+//     cl_ulong kernel_local_mem_size;
+// } nn_kernel_info;
+// 
+// typedef struct _nn_kernel {
+//     cl_program program;
+//     cl_kernel *kernels;
+//     nn_kernel_info *info;
+// } nn_kernel;
+// 
+// // -----------------------------------------------------------------------------
+// // External Objects.
+// // -----------------------------------------------------------------------------
+// struct _nn_system_info {
+//     cl_platform_id platforms[MAX_PLATFORMS];
+//     cl_device_id devices[MAX_DEVICES];
+//     nn_device_info device_info[MAX_DEVICES];
+//     unsigned short device_platform_mapping[MAX_DEVICES];
+// };
+// 
+// struct _nn_system_context {
+//     cl_platform_id platform;
+// 
+//     // For now use just one device.
+//     // TODO - TASK-1: In the future this should be expanded.
+//     cl_device_id device;
+//     nn_device_info device_info;
+// 
+//     cl_context context;
+//     cl_command_queue command_queue;
+// };
+ 
+#endif // __NN_SDK_TYPES_INTERNAL_H__

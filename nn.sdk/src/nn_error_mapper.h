@@ -12,12 +12,12 @@
 //
 // =================================================================================================
 
-#ifndef __NN_ERROR_MAPPER_H__
-#define __NN_ERROR_MAPPER_H__
+#ifndef __NN_SDK_ERROR_MAPPER_H__
+#define __NN_SDK_ERROR_MAPPER_H__
 
-#include "nn_cl_include.h"
-#include "nn.sdk.common/nn_error.h"
-
+#include "nn_cl_include.h"                  // cl_uint
+#include "nn.sdk.common/nn_error.h"         // nn_error
+ 
 typedef struct _nn_tuple {
     cl_uint key;
     nn_error error;
@@ -31,7 +31,7 @@ extern const unsigned short CL_ERROR_MAPPER_GET_DEVICE_IDS_LENGTH;
 
 extern const nn_tuple CL_ERROR_MAPPER_CREATE_CONTEXT[];
 extern const unsigned short CL_ERROR_MAPPER_CREATE_CONTEXT_LENGTH;
-
+/*
 extern const nn_tuple CL_ERROR_MAPPER_CREATE_COMMAND_QUEUE[];
 extern const unsigned short CL_ERROR_MAPPER_CREATE_COMMAND_QUEUE_LENGTH;
 
@@ -43,7 +43,7 @@ extern const unsigned short CL_ERROR_MAPPER_BUILD_PROGRAM_LENGTH;
 
 extern const nn_tuple CL_ERROR_MAPPER_CREATE_KERNEL[];
 extern const unsigned short CL_ERROR_MAPPER_CREATE_KERNEL_LENGTH;
-
+*/
 nn_error map_error_code(cl_uint error_code, nn_tuple const * const mapping, const unsigned short length);
 
-#endif // __NN_ERROR_MAPPER_H__
+#endif // __NN_SDK_ERROR_MAPPER_H__

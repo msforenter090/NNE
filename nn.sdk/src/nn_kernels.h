@@ -12,20 +12,20 @@
 //
 // =================================================================================================
 
-#ifndef __NN_KERNELS_H__
-#define __NN_KERNELS_H__
+#ifndef __NN_SDK_KERNELS_H__
+#define __NN_SDK_KERNELS_H__
 
-#include "nn.sdk.common/nn_error.h"
-#include "nn_types_internal.h"
-#include "nn_types.h"
+// #include "nn.sdk.common/nn_error.h"
+// #include "nn_types_internal.h"
+// #include "nn_types.h"
 
 // -----------------------------------------------------------------------------
 // Solve.
 // -----------------------------------------------------------------------------
 #define KERNEL_SOLVE_TIGHT 0
-extern const char **network_solve_tight_kernel_names_list;
-extern const char **network_solve_tight_sources_list;
-extern nn_error network_solve_tight_sources(nn_kernel_source *const sources);
-extern nn_error network_solve_tight_kernel(CONTEXT, nn_kernel **kernel);
+// extern const char **network_solve_tight_kernel_names_list;
+// extern const char **network_solve_tight_sources_list;
+// extern nn_error network_solve_tight_sources(nn_kernel_source *const sources);
+// extern nn_error network_solve_tight_kernel(CONTEXT, nn_kernel **kernel);
 
-#endif // __NN_KERNELS_H__
+#endif // __NN_SDK_KERNELS_H__

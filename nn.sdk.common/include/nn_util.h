@@ -12,8 +12,8 @@
 //
 // =================================================================================================
 
-#ifndef __NN_COMMON_UTIL_H__
-#define __NN_COMMON_UTIL_H__
+#ifndef __NN_SDK_COMMON_UTIL_H__
+#define __NN_SDK_COMMON_UTIL_H__
 
 #include <stdio.h>
 
@@ -40,4 +40,4 @@
 #define dump_bits(...) #__VA_ARGS__
 #endif // dump_bits
 
-#endif // __NN_COMMON_UTIL_H__
+#endif // __NN_SDK_COMMON_UTIL_H__

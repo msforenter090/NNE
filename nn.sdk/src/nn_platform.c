@@ -1,9 +1,9 @@
 #include "nn_platform.h"
 
 #include <stdio.h>
-#include "nn_kernels.h"
-#include "nn_runtime.h"
-
+// #include "nn_kernels.h"
+// #include "nn_runtime.h"
+/*
 static void network_info(unsigned int * const fan_in, unsigned int * const fan_out, unsigned int * const bias_length,
                         unsigned int * const longest_output, unsigned int * const synapses_length, 
                         unsigned int * const longest_synapse_layer, unsigned int const * const layer_meta,
@@ -115,3 +115,4 @@ nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net, ELEMENT_TYP
     clReleaseProgram(kernel->program);
     return OK;
 }
+*/
