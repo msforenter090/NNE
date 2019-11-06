@@ -15,7 +15,7 @@ set(SRC_DIR             "src")
 set(PUBLIC_HEADERS      ${PUBLIC_HEADER_DIR}/nn_context.h
                         ${PUBLIC_HEADER_DIR}/nn_defs.h
                         ${PUBLIC_HEADER_DIR}/nn_matrix.h
-                        ${PUBLIC_HEADER_DIR}/nn_platform.h
+                        ${PUBLIC_HEADER_DIR}/nn_network.h
                         ${PUBLIC_HEADER_DIR}/nn_types.h
                         )
 
@@ -30,7 +30,7 @@ set(SRC_FILES           ${SRC_DIR}/nn_cl_include.h
                         ${SRC_DIR}/nn_matrix.c
                         ${SRC_DIR}/nn_memory.c
                         ${SRC_DIR}/nn_memory.h
-                        ${SRC_DIR}/nn_platform.c
+                        ${SRC_DIR}/nn_network.c
                         ${SRC_DIR}/nn_runtime.c
                         ${SRC_DIR}/nn_runtime.h
                         ${SRC_DIR}/nn_types_internal.h

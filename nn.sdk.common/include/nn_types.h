@@ -43,4 +43,12 @@ typedef struct _nn_context {
 
 #define CONTEXT nn_context *context
 
+// -----------------------------------------------------------------------------
+// Network.
+// -----------------------------------------------------------------------------
+typedef struct _nn_network {
+    void * const tag;
+    unsigned int * const topology;
+    float *const synapses;
+} nn_network;
 #endif // __NN_SDK_COMMON_DEFS_H__

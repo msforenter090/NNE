@@ -1,4 +1,4 @@
-#include "nn_platform.h"
+#include "nn_network.h"
 
 #include <stdio.h>
 // #include "nn_kernels.h"

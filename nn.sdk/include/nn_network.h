@@ -12,15 +12,15 @@
 //
 // =================================================================================================
 
-#ifndef __NN_SDK_PLATFORM_H__
-#define __NN_SDK_PLATFORM_H__
+#ifndef __NN_SDK_NETWORK_H__
+#define __NN_SDK_NETWORK_H__
 
-// #include "nn_defs.h"
-// #include "nn_types.h"
-// #include "nn_matrix.h"
-// #include "nn.sdk.common/nn_error.h"
+#include "nn_defs.h"                    // DLL_PUBLIC
+#include "nn.sdk.common/nn_types.h"     // CONTEXT, nn_network
+#include "nn.sdk.common/nn_error.h"     // nn_error
 
+extern DLL_PUBLIC nn_error new_nn_network(CONTEXT, nn_network *const network, );
 // extern DLL_PUBLIC nn_error nn_execute_kernel(CONTEXT, nn_neural_net const * const net,
 //                                             ELEMENT_TYPE *input, ELEMENT_TYPE *output);
 
-#endif // __NN_SDK_PLATFORM_H__
+#endif // __NN_SDK_NETWORK_H__

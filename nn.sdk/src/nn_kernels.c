@@ -1,6 +1,6 @@
 #include "nn_kernels.h"
 
-// #include "nn.sdk.common/nn_util.h"
+#include "nn.sdk.common/nn_util.h"      // NULL
 
 // const char **network_solve_tight_kernel_names_list = (const char *[]) {
 //     "solve_tight", NULL
@@ -138,3 +138,13 @@ const char **network_execution_sources_list = (const char *[]) {
 //     (*kernel)->info = host_context->allocate(sizeof(struct _nn_kernel_info), PTR_SIZE);
 //     return OK;
 // }
+
+#define NETWORK dump_bits( __kernel void network() { } )
+
+const char **network = (const char *[]) {
+    "network", NULL
+};
+
+const char **network_sources_list = (const char *[]) {
+    NETWORK, NULL
+};

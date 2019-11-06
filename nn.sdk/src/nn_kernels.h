@@ -28,4 +28,7 @@
 // extern nn_error network_solve_tight_sources(nn_kernel_source *const sources);
 // extern nn_error network_solve_tight_kernel(CONTEXT, nn_kernel **kernel);
 
+extern const char **network;
+extern const char **network_sources_list;
+
 #endif // __NN_SDK_KERNELS_H__

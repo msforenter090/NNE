@@ -32,8 +32,7 @@
 #endif   // min
 
 #ifndef dump_bits_buffer
-#define dump_bits_buffer(buffer, ...) \
-      sprintf(buffer, "%s", #__VA_ARGS__)
+#define dump_bits_buffer(buffer, ...) sprintf(buffer, "%s", #__VA_ARGS__)
 #endif // dump_bits_buffer
 
 #ifndef dump_bits
